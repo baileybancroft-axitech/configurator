@@ -1,0 +1,1095 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Axitech Unit Economics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-100">
+    <div id="root"></div>
+    
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script type="text/babel" data-presets="react">
+      const { useState, useMemo, useEffect } = React;
+      const { createRoot } = ReactDOM;
+
+      // Icon components
+      const SlidersHorizontal = ({ className }) => <span className={className}>⚙️</span>;
+      const DollarSign = ({ className }) => <span className={className}>💰</span>;
+      const TrendingUp = ({ className }) => <span className={className}>📈</span>;
+      const Landmark = ({ className }) => <span className={className}>🏛️</span>;
+      const PiggyBank = ({ className }) => <span className={className}>🐷</span>;
+      const RotateCcw = ({ className }) => <span className={className}>🔄</span>;
+      const ChevronDown = ({ className }) => <span className={className}>▼</span>;
+      const Wrench = ({ className }) => <span className={className}>🔧</span>;
+      const Car = ({ className }) => <span className={className}>🚗</span>;
+      const Handshake = ({ className }) => <span className={className}>🤝</span>;
+      const Percent = ({ className }) => <span className={className}>%</span>;
+      const Building = ({ className }) => <span className={className}>🏢</span>;
+
+      const App = () => {
+        const defaultValues = {
+          vehicleType: 'Prestige', 
+          isSubscriber: false, 
+          isGta2: false,
+          gtaRate: 152, 
+          hireDays: 27, 
+          adminFee: 150,
+          subscriberDiscountPercentage: 40, 
+          subscriberDiscountRate: 120, 
+          subscriberDiscountAdminFee: 0,
+          internalProcessCost: 150,
+          internalVehicleCostStandard: 50, 
+          internalVehicleCostPrestige: 60, 
+          internalVehicleCostCommercial: 75,
+          axitechFeeStandard: 350, 
+          axitechFeePrestige: 950, 
+          axitechFeeCommercial: 350,
+          repairInvoiceAmount: 4700, 
+          repairDiscountRate: 17.5, 
+          repairDiscountCap: 800, 
+          repairAdminFee: 37,
+          repairEngineeringRevenue: 50, 
+          repairAnnualInterestRate: 8, 
+          repairTimeToRecover: 45,
+          repairBadDebtFactor: 5, 
+          repairAxitechCommission: 300, 
+          repairProcessingFee: 0,
+          repairEngineeringCosts: 45, 
+          repairDeploymentCosts: 35, 
+          repairInvoicingCosts: 40,
+          repairLitigationCost: 1, 
+          repairLitigationRate: 5,
+        };
+
+        const [vehicleType, setVehicleType] = useState(defaultValues.vehicleType);
+        const [isSubscriber, setIsSubscriber] = useState(defaultValues.isSubscriber);
+        const [isGta2, setIsGta2] = useState(defaultValues.isGta2);
+        const [gtaRate, setGtaRate] = useState(defaultValues.gtaRate);
+        const [hireDays, setHireDays] = useState(defaultValues.hireDays);
+        const [adminFee, setAdminFee] = useState(defaultValues.adminFee);
+        const [subscriberDiscountPercentage, setSubscriberDiscountPercentage] = useState(defaultValues.subscriberDiscountPercentage);
+        const [subscriberDiscountRate, setSubscriberDiscountRate] = useState(defaultValues.subscriberDiscountRate);
+        const [subscriberDiscountAdminFee, setSubscriberDiscountAdminFee] = useState(defaultValues.subscriberDiscountAdminFee);
+        const [internalProcessCost, setInternalProcessCost] = useState(defaultValues.internalProcessCost);
+        const [internalVehicleCostStandard, setInternalVehicleCostStandard] = useState(defaultValues.internalVehicleCostStandard);
+        const [internalVehicleCostPrestige, setInternalVehicleCostPrestige] = useState(defaultValues.internalVehicleCostPrestige);
+        const [internalVehicleCostCommercial, setInternalVehicleCostCommercial] = useState(defaultValues.internalVehicleCostCommercial);
+        const [axitechFeeStandard, setAxitechFeeStandard] = useState(defaultValues.axitechFeeStandard);
+        const [axitechFeePrestige, setAxitechFeePrestige] = useState(defaultValues.axitechFeePrestige);
+        const [axitechFeeCommercial, setAxitechFeeCommercial] = useState(defaultValues.axitechFeeCommercial);
+        const [repairInvoiceAmount, setRepairInvoiceAmount] = useState(defaultValues.repairInvoiceAmount);
+        const [repairDiscountRate, setRepairDiscountRate] = useState(defaultValues.repairDiscountRate);
+        const [repairDiscountCap, setRepairDiscountCap] = useState(defaultValues.repairDiscountCap);
+        const [repairAdminFee, setRepairAdminFee] = useState(defaultValues.repairAdminFee);
+        const [repairEngineeringRevenue, setRepairEngineeringRevenue] = useState(defaultValues.repairEngineeringRevenue);
+        const [repairAnnualInterestRate, setRepairAnnualInterestRate] = useState(defaultValues.repairAnnualInterestRate);
+        const [repairTimeToRecover, setRepairTimeToRecover] = useState(defaultValues.repairTimeToRecover);
+        const [nonSubRepairTimeToRecover, setNonSubRepairTimeToRecover] = useState(defaultValues.repairTimeToRecover);
+        const [repairBadDebtFactor, setRepairBadDebtFactor] = useState(defaultValues.repairBadDebtFactor);
+        const [repairAxitechCommission, setRepairAxitechCommission] = useState(defaultValues.repairAxitechCommission);
+        const [repairProcessingFee, setRepairProcessingFee] = useState(defaultValues.repairProcessingFee);
+        const [repairEngineeringCosts, setRepairEngineeringCosts] = useState(defaultValues.repairEngineeringCosts);
+        const [repairDeploymentCosts, setRepairDeploymentCosts] = useState(defaultValues.repairDeploymentCosts);
+        const [repairInvoicingCosts, setRepairInvoicingCosts] = useState(defaultValues.repairInvoicingCosts);
+        const [repairLitigationCost, setRepairLitigationCost] = useState(defaultValues.repairLitigationCost);
+        const [repairLitigationRate, setRepairLitigationRate] = useState(defaultValues.repairLitigationRate);
+
+        useEffect(() => {
+          if (isSubscriber) { 
+            setNonSubRepairTimeToRecover(repairTimeToRecover); 
+            setRepairTimeToRecover(30); 
+          } else { 
+            setRepairTimeToRecover(nonSubRepairTimeToRecover); 
+          }
+        }, [isSubscriber, repairTimeToRecover, nonSubRepairTimeToRecover]);
+        
+        useEffect(() => { 
+          setSubscriberDiscountRate(isSubscriber ? 60 : defaultValues.subscriberDiscountRate); 
+        }, [isSubscriber, defaultValues.subscriberDiscountRate]);
+
+        const handleReset = () => {
+          setVehicleType(defaultValues.vehicleType);
+          setIsSubscriber(defaultValues.isSubscriber);
+          setIsGta2(defaultValues.isGta2);
+          setGtaRate(defaultValues.gtaRate);
+          setHireDays(defaultValues.hireDays);
+          setAdminFee(defaultValues.adminFee);
+          setSubscriberDiscountPercentage(defaultValues.subscriberDiscountPercentage);
+          setSubscriberDiscountRate(defaultValues.subscriberDiscountRate);
+          setSubscriberDiscountAdminFee(defaultValues.subscriberDiscountAdminFee);
+          setInternalProcessCost(defaultValues.internalProcessCost);
+          setInternalVehicleCostStandard(defaultValues.internalVehicleCostStandard);
+          setInternalVehicleCostPrestige(defaultValues.internalVehicleCostPrestige);
+          setInternalVehicleCostCommercial(defaultValues.internalVehicleCostCommercial);
+          setAxitechFeeStandard(defaultValues.axitechFeeStandard);
+          setAxitechFeePrestige(defaultValues.axitechFeePrestige);
+          setAxitechFeeCommercial(defaultValues.axitechFeeCommercial);
+          setRepairInvoiceAmount(defaultValues.repairInvoiceAmount);
+          setRepairDiscountRate(defaultValues.repairDiscountRate);
+          setRepairDiscountCap(defaultValues.repairDiscountCap);
+          setRepairAdminFee(defaultValues.repairAdminFee);
+          setRepairEngineeringRevenue(defaultValues.repairEngineeringRevenue);
+          setRepairAnnualInterestRate(defaultValues.repairAnnualInterestRate);
+          setRepairTimeToRecover(defaultValues.repairTimeToRecover);
+          setNonSubRepairTimeToRecover(defaultValues.repairTimeToRecover);
+          setRepairBadDebtFactor(defaultValues.repairBadDebtFactor);
+          setRepairAxitechCommission(defaultValues.repairAxitechCommission);
+          setRepairProcessingFee(defaultValues.repairProcessingFee);
+          setRepairEngineeringCosts(defaultValues.repairEngineeringCosts);
+          setRepairDeploymentCosts(defaultValues.repairDeploymentCosts);
+          setRepairInvoicingCosts(defaultValues.repairInvoicingCosts);
+          setRepairLitigationCost(defaultValues.repairLitigationCost);
+          setRepairLitigationRate(defaultValues.repairLitigationRate);
+        };
+
+        const calculatedData = useMemo(() => {
+          const FED_BASE_RATE = 4.33;
+          
+          // Hire calculations
+          let hireVehicleCost = 0;
+          let hireAxitechFee = 0;
+          if (vehicleType === 'Standard') {
+            hireVehicleCost = internalVehicleCostStandard;
+            hireAxitechFee = axitechFeeStandard;
+          } else if (vehicleType === 'Prestige') {
+            hireAxitechFee = axitechFeePrestige;
+          } else {
+            hireVehicleCost = internalVehicleCostCommercial;
+            hireAxitechFee = axitechFeeCommercial;
+          }
+
+          const hireBadDebtPercent = isSubscriber ? 2 : (isGta2 ? 10 : 20);
+          let effectiveGtaRate = gtaRate;
+          let hireRevenueCalculation = `(£${gtaRate.toFixed(2)} × ${hireDays} days)`;
+          let effectiveAdminFee = adminFee;
+          
+          if (isSubscriber) {
+            effectiveGtaRate = (gtaRate * (1 - subscriberDiscountPercentage / 100)) + (subscriberDiscountRate * (subscriberDiscountPercentage / 100));
+            hireRevenueCalculation = `(£${effectiveGtaRate.toFixed(2)} blended rate × ${hireDays} days)`;
+            effectiveAdminFee = (adminFee * (1 - subscriberDiscountPercentage / 100)) + (subscriberDiscountAdminFee * (subscriberDiscountPercentage / 100));
+          }
+
+          const hireRevenue = effectiveGtaRate * hireDays;
+          const hireGrossInvoice = hireRevenue + effectiveAdminFee;
+          const hireBadDebtProvision = hireGrossInvoice * (hireBadDebtPercent / 100);
+          const hireNetAfterBadDebt = hireGrossInvoice - hireBadDebtProvision;
+          const hireNetAfterProcessCost = hireNetAfterBadDebt - internalProcessCost;
+          const hireRentalSupplyCost = hireVehicleCost * hireDays;
+          const hireProfitBeforeAxitechFee = hireNetAfterProcessCost - hireRentalSupplyCost;
+          const hireModelNetProfitLoss = hireProfitBeforeAxitechFee - hireAxitechFee;
+
+          // Repair calculations
+          const repairGrossInvoice = repairInvoiceAmount;
+          const repairInitialDiscount = repairGrossInvoice * (repairDiscountRate / 100);
+          const isDiscountCapped = repairInitialDiscount > repairDiscountCap;
+          const repairBldRevenue = Math.min(repairInitialDiscount, repairDiscountCap);
+          const repairCostOfCapital = (repairGrossInvoice * (repairAnnualInterestRate / 100) / 365) * repairTimeToRecover;
+          const repairBadDebtPercentage = isSubscriber ? 0.5 : repairBadDebtFactor;
+          const repairBadDebtProvision = repairBldRevenue * (repairBadDebtPercentage / 100);
+          const repairSubscriberDiscount = isSubscriber ? repairGrossInvoice * 0.05 : 0;
+          const repairExpectedLitigationCost = (repairGrossInvoice * (repairLitigationCost / 100)) * (repairLitigationRate / 100);
+          const repairTotalOperatingCosts = repairProcessingFee + repairEngineeringCosts + repairDeploymentCosts + repairInvoicingCosts + repairExpectedLitigationCost + repairAxitechCommission;
+          const repairModelNetProfitLoss = (repairBldRevenue + repairAdminFee + repairEngineeringRevenue) - (repairCostOfCapital + repairBadDebtProvision + repairSubscriberDiscount + repairTotalOperatingCosts);
+
+          // Enterprise calculations
+          const enterpriseHireIncome = hireRevenue + effectiveAdminFee;
+          const enterpriseHireCosts = hireRentalSupplyCost + internalProcessCost + hireAxitechFee + hireBadDebtProvision;
+          const enterpriseHirePNL = enterpriseHireIncome - enterpriseHireCosts;
+          const enterpriseRepairIncome = repairBldRevenue + repairAdminFee + repairEngineeringRevenue;
+          const enterpriseRepairCosts = repairCostOfCapital + repairSubscriberDiscount + repairAxitechCommission + repairProcessingFee + repairEngineeringCosts + repairDeploymentCosts + repairInvoicingCosts + repairExpectedLitigationCost + repairBadDebtProvision;
+          const enterpriseRepairPNL = enterpriseRepairIncome - enterpriseRepairCosts;
+          const partnerTotalProfitLoss = enterpriseHirePNL + enterpriseRepairPNL;
+          const axitechTotalRevenue = hireAxitechFee + repairAxitechCommission;
+          const totalRevenuePot = axitechTotalRevenue + partnerTotalProfitLoss;
+          
+          let axitechRevenueSplit = 0;
+          let partnerRevenueSplit = 0;
+          if (totalRevenuePot > 0 && axitechTotalRevenue >= 0 && partnerTotalProfitLoss >= 0) {
+            axitechRevenueSplit = (axitechTotalRevenue / totalRevenuePot) * 100;
+            partnerRevenueSplit = (partnerTotalProfitLoss / totalRevenuePot) * 100;
+          }
+
+          // Margin calculations
+          const hireMargin = enterpriseHireIncome > 0 ? (enterpriseHirePNL / enterpriseHireIncome) * 100 : 0;
+          const repairMargin = enterpriseRepairIncome > 0 ? (enterpriseRepairPNL / enterpriseRepairIncome) * 100 : 0;
+          const blendedMargin = (enterpriseHireIncome + enterpriseRepairIncome) > 0 ? (partnerTotalProfitLoss / (enterpriseHireIncome + enterpriseRepairIncome)) * 100 : 0;
+
+          return {
+            caseTypeName: `${vehicleType} - ${isSubscriber ? 'Subscriber' : 'Non-Subscriber'}`,
+            hire: {
+              revenue: hireRevenue,
+              revenueCalculation: hireRevenueCalculation,
+              grossInvoice: hireGrossInvoice,
+              effectiveAdminFee: effectiveAdminFee,
+              badDebtProvision: hireBadDebtProvision,
+              badDebtPercent: hireBadDebtPercent,
+              netAfterBadDebt: hireNetAfterBadDebt,
+              netAfterProcessCost: hireNetAfterProcessCost,
+              rentalSupplyCost: hireRentalSupplyCost,
+              profitBeforeAxitechFee: hireNetAfterProcessCost - hireRentalSupplyCost,
+              modelNetProfitLoss: hireModelNetProfitLoss,
+              axitechFee: hireAxitechFee,
+              vehicleCostPerDay: hireVehicleCost,
+              enterprisePNL: enterpriseHirePNL,
+            },
+            repair: {
+              grossInvoice: repairGrossInvoice,
+              bldRevenue: repairBldRevenue,
+              isDiscountCapped: isDiscountCapped,
+              costOfCapital: repairCostOfCapital,
+              badDebtProvision: repairBadDebtProvision,
+              badDebtPercent: repairBadDebtPercentage,
+              subscriberDiscount: repairSubscriberDiscount,
+              expectedLitigationCost: repairExpectedLitigationCost,
+              totalOperatingCosts: repairTotalOperatingCosts,
+              modelNetProfitLoss: repairModelNetProfitLoss,
+              axitechCommission: repairAxitechCommission,
+              processingFee: repairProcessingFee,
+              engineeringCosts: repairEngineeringCosts,
+              deploymentCosts: repairDeploymentCosts,
+              invoicingCosts: repairInvoicingCosts,
+              enterprisePNL: enterpriseRepairPNL,
+            },
+            combined: {
+              axitechTotalRevenue: axitechTotalRevenue,
+              partnerTotalProfitLoss: partnerTotalProfitLoss,
+              axitechRevenueSplit: axitechRevenueSplit,
+              partnerRevenueSplit: partnerRevenueSplit,
+              hireMargin: hireMargin,
+              repairMargin: repairMargin,
+              blendedMargin: blendedMargin,
+              enterpriseHireIncome,
+              enterpriseHireCosts,
+              enterpriseRepairIncome,
+              enterpriseRepairCosts,
+            }
+          };
+        }, [
+          vehicleType, isSubscriber, isGta2, gtaRate, hireDays, adminFee, internalProcessCost,
+          subscriberDiscountPercentage, subscriberDiscountRate, subscriberDiscountAdminFee,
+          internalVehicleCostStandard, internalVehicleCostPrestige, internalVehicleCostCommercial,
+          axitechFeeStandard, axitechFeePrestige, axitechFeeCommercial,
+          repairInvoiceAmount, repairDiscountRate, repairDiscountCap, repairAdminFee,
+          repairEngineeringRevenue, repairAnnualInterestRate, repairTimeToRecover,
+          repairBadDebtFactor, repairAxitechCommission, repairProcessingFee,
+          repairEngineeringCosts, repairDeploymentCosts, repairInvoicingCosts,
+          repairLitigationCost, repairLitigationRate
+        ]);
+
+        return (
+          <div className="bg-slate-100 min-h-screen font-sans text-slate-800">
+            <style>{`
+              input[type=number]::-webkit-outer-spin-button,
+              input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+              input[type=number] { -moz-appearance: textfield; }
+            `}</style>
+            
+            <header className="bg-white shadow-md p-4 sticky top-0 z-20">
+              <div className="container mx-auto flex justify-between items-center">
+                <h1 className="text-2xl font-bold text-slate-900">Average Axitech & ERAC Unit Economics</h1>
+                <div className="flex items-center space-x-2">
+                  <img src="https://axitech.co/images/logo_dark.svg" alt="Axitech Logo" className="h-8"/>
+                  <span className="text-2xl font-light text-slate-400">+</span>
+                  <img src="https://www.erac-uk.co.uk/content/erac/uk/en/e-commerce/universal-header-footer/ERAC-logo-2022.png.image.100.0.png" alt="ERAC Logo" className="h-10"/>
+                </div>
+              </div>
+            </header>
+
+            <main className="container mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <aside className="lg:col-span-4 bg-white p-6 rounded-xl shadow-lg h-fit">
+                <div className="flex justify-between items-center mb-6">
+                  <h2 className="text-xl font-bold flex items-center text-slate-700">
+                    <SlidersHorizontal className="mr-2 h-5 w-5" /> Case Inputs
+                  </h2>
+                  <button onClick={handleReset} className="flex items-center text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors duration-200" title="Reset to Defaults">
+                    <RotateCcw className="mr-1 h-4 w-4" />
+                    Reset
+                  </button>
+                </div>
+                
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-600 mb-2">Global Inputs</h3>
+                    <div className="space-y-4 p-4 bg-slate-50 rounded-lg border">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-600 mb-2">Vehicle Type</label>
+                        <div className="flex w-full bg-slate-200 rounded-lg p-1">
+                          {['Standard', 'Prestige', 'Commercial'].map(option =>
+                            <button key={option} onClick={() => setVehicleType(option)} className={`w-full text-sm font-semibold py-1.5 rounded-md transition-colors duration-200 focus:outline-none ${vehicleType === option ? 'bg-white text-indigo-600 shadow' : 'bg-transparent text-slate-500 hover:bg-slate-300'}`}>
+                              {option}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-600 mb-2">Direct Hire Subscriber?</label>
+                        <div className="flex w-full bg-slate-200 rounded-lg p-1">
+                          {['Subscriber', 'Non-Subscriber'].map(option =>
+                            <button key={option} onClick={() => setIsSubscriber(option === 'Subscriber')} className={`w-full text-sm font-semibold py-1.5 rounded-md transition-colors duration-200 focus:outline-none ${(isSubscriber ? 'Subscriber' : 'Non-Subscriber') === option ? 'bg-white text-indigo-600 shadow' : 'bg-transparent text-slate-500 hover:bg-slate-300'}`}>
+                              {option}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg">
+                    <div className="p-4 space-y-4">
+                      <h4 className="text-md font-semibold text-slate-600 flex items-center">
+                        <Car className="mr-2 h-5 w-5 text-blue-500" />
+                        Credit Hire Inputs
+                      </h4>
+                      
+                      <div className="space-y-4">
+                        <h5 className="text-md font-semibold text-slate-600 flex items-center">
+                          <PiggyBank className="mr-2 h-5 w-5 text-green-500" />
+                          Revenue
+                        </h5>
+                        
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">GTA Daily Rate</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={30} max={300} step={1} value={gtaRate} onChange={(e) => setGtaRate(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={gtaRate} min={30} max={300} step={1} onChange={(e) => setGtaRate(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {isSubscriber && (
+                          <div className="p-3 bg-indigo-50 rounded-lg space-y-3 border border-indigo-200">
+                            <h6 className="text-sm font-bold text-indigo-700">Subscriber Discount Assumptions</h6>
+                            <div className="space-y-1">
+                              <label className="block text-sm font-medium text-slate-600">Direct Hire Subscriber %</label>
+                              <div className="flex items-center space-x-3">
+                                <input type="range" min={0} max={100} step={1} value={subscriberDiscountPercentage} onChange={(e) => setSubscriberDiscountPercentage(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                                <div className="relative w-32">
+                                  <input type="number" value={subscriberDiscountPercentage} min={0} max={100} step={1} onChange={(e) => setSubscriberDiscountPercentage(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                                  <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Average Hire Days</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={10} max={40} step={1} value={hireDays} onChange={(e) => setHireDays(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <input type="number" value={hireDays} min={10} max={40} step={1} onChange={(e) => setHireDays(Number(e.target.value))} className="text-sm font-semibold w-32 py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Admin Fee/Uplift</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={300} step={10} value={adminFee} onChange={(e) => setAdminFee(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={adminFee} min={0} max={300} step={10} onChange={(e) => setAdminFee(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr className="my-4" />
+                      
+                      <div className="space-y-4">
+                        <h5 className="text-md font-semibold text-slate-600 flex items-center">
+                          <Landmark className="mr-2 h-5 w-5 text-red-500" />
+                          Costs
+                        </h5>
+
+                        {vehicleType === 'Standard' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Axitech Hire Fee</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={0} max={2000} step={10} value={axitechFeeStandard} onChange={(e) => setAxitechFeeStandard(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={axitechFeeStandard} min={0} max={2000} step={10} onChange={(e) => setAxitechFeeStandard(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {vehicleType === 'Prestige' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Axitech Hire Fee</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={0} max={2000} step={50} value={axitechFeePrestige} onChange={(e) => setAxitechFeePrestige(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={axitechFeePrestige} min={0} max={2000} step={50} onChange={(e) => setAxitechFeePrestige(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {vehicleType === 'Commercial' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Axitech Hire Fee</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={0} max={2000} step={10} value={axitechFeeCommercial} onChange={(e) => setAxitechFeeCommercial(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={axitechFeeCommercial} min={0} max={2000} step={10} onChange={(e) => setAxitechFeeCommercial(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {vehicleType === 'Standard' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Vehicle Supply Cost/Day</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={40} max={70} step={1} value={internalVehicleCostStandard} onChange={(e) => setInternalVehicleCostStandard(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={internalVehicleCostStandard} min={40} max={70} step={1} onChange={(e) => setInternalVehicleCostStandard(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {vehicleType === 'Prestige' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Vehicle Supply Cost/Day</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={50} max={90} step={1} value={internalVehicleCostPrestige} onChange={(e) => setInternalVehicleCostPrestige(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={internalVehicleCostPrestige} min={50} max={90} step={1} onChange={(e) => setInternalVehicleCostPrestige(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {vehicleType === 'Commercial' && (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Vehicle Supply Cost/Day</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={60} max={120} step={1} value={internalVehicleCostCommercial} onChange={(e) => setInternalVehicleCostCommercial(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                                <input type="number" value={internalVehicleCostCommercial} min={60} max={120} step={1} onChange={(e) => setInternalVehicleCostCommercial(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Internal Cost of Process</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={250} step={5} value={internalProcessCost} onChange={(e) => setInternalProcessCost(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={internalProcessCost} min={0} max={250} step={5} onChange={(e) => setInternalProcessCost(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        {isSubscriber ? (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-400">Bad Debt %</label>
+                            <div className="text-sm font-semibold text-slate-800 w-full bg-slate-100 py-2 rounded-md px-3 text-right">
+                              2% <span className="text-xs font-normal text-slate-400 ml-2">(fixed)</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-2">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-600 mb-2">GTA 2.0</label>
+                              <div className="flex w-full bg-slate-200 rounded-lg p-1">
+                                {['On', 'Off'].map(option =>
+                                  <button key={option} onClick={() => setIsGta2(option === 'On')} className={`w-full text-sm font-semibold py-1.5 rounded-md transition-colors duration-200 focus:outline-none ${isGta2 ? 'bg-white text-indigo-600 shadow' : 'bg-transparent text-slate-500 hover:bg-slate-300'}`}>
+                                    {option}
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              <label className="block text-sm font-medium text-slate-600">Bad Debt %</label>
+                              <div className="text-sm font-semibold text-slate-800 w-full bg-slate-100 py-2 rounded-md px-3 text-right">
+                                {isGta2 ? '10' : '20'}%
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border rounded-lg">
+                    <div className="p-4 space-y-4">
+                      <h4 className="text-md font-semibold text-slate-600 flex items-center">
+                        <Wrench className="mr-2 h-5 w-5 text-orange-500" />
+                        Credit Repair Inputs
+                      </h4>
+                      
+                      <div className="space-y-4">
+                        <h5 className="text-md font-semibold text-slate-600 flex items-center">
+                          <PiggyBank className="mr-2 h-5 w-5 text-green-500" />
+                          Revenue
+                        </h5>
+                        
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Total Repair Invoice</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={1000} max={10000} step={100} value={repairInvoiceAmount} onChange={(e) => setRepairInvoiceAmount(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairInvoiceAmount} min={1000} max={10000} step={100} onChange={(e) => setRepairInvoiceAmount(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Bottom Line Discount %</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={50} step={0.5} value={repairDiscountRate} onChange={(e) => setRepairDiscountRate(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <input type="number" value={repairDiscountRate} min={0} max={50} step={0.5} onChange={(e) => setRepairDiscountRate(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Discount Cap</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={2500} step={50} value={repairDiscountCap} onChange={(e) => setRepairDiscountCap(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairDiscountCap} min={0} max={2500} step={50} onChange={(e) => setRepairDiscountCap(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Admin Fee</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={20} max={100} step={5} value={repairAdminFee} onChange={(e) => setRepairAdminFee(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairAdminFee} min={20} max={100} step={5} onChange={(e) => setRepairAdminFee(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Other Revenue (Engineering)</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={200} step={5} value={repairEngineeringRevenue} onChange={(e) => setRepairEngineeringRevenue(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairEngineeringRevenue} min={0} max={200} step={5} onChange={(e) => setRepairEngineeringRevenue(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr className="my-4" />
+                      
+                      <div className="space-y-4">
+                        <h5 className="text-md font-semibold text-slate-600 flex items-center">
+                          <Landmark className="mr-2 h-5 w-5 text-red-500" />
+                          Costs & Risks
+                        </h5>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Axitech Repair Fee</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={700} step={10} value={repairAxitechCommission} onChange={(e) => setRepairAxitechCommission(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairAxitechCommission} min={0} max={700} step={10} onChange={(e) => setRepairAxitechCommission(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Annual Interest Rate</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={25} step={0.5} value={repairAnnualInterestRate} onChange={(e) => setRepairAnnualInterestRate(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <input type="number" value={repairAnnualInterestRate} min={0} max={25} step={0.5} onChange={(e) => setRepairAnnualInterestRate(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Time to Recover (days)</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={10} max={120} step={1} value={repairTimeToRecover} onChange={(e) => setRepairTimeToRecover(Number(e.target.value))} disabled={isSubscriber} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer disabled:bg-slate-100 disabled:cursor-not-allowed" />
+                            <input type="number" value={repairTimeToRecover} min={10} max={120} step={1} onChange={(e) => setRepairTimeToRecover(Number(e.target.value))} disabled={isSubscriber} className="text-sm font-semibold w-32 py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800 disabled:bg-slate-200 disabled:text-slate-500" />
+                          </div>
+                        </div>
+
+                        {isSubscriber ? (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-400">Bad Debt %</label>
+                            <div className="text-sm font-semibold text-slate-800 w-full bg-slate-100 py-2 rounded-md px-3 text-right">
+                              0.5% <span className="text-xs font-normal text-slate-400 ml-2">(fixed for subscribers)</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-1">
+                            <label className="block text-sm font-medium text-slate-600">Bad Debt %</label>
+                            <div className="flex items-center space-x-3">
+                              <input type="range" min={0} max={20} step={0.5} value={repairBadDebtFactor} onChange={(e) => setRepairBadDebtFactor(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                              <div className="relative w-32">
+                                <input type="number" value={repairBadDebtFactor} min={0} max={20} step={0.5} onChange={(e) => setRepairBadDebtFactor(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                                <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Repair Processing Fee</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={500} step={10} value={repairProcessingFee} onChange={(e) => setRepairProcessingFee(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairProcessingFee} min={0} max={500} step={10} onChange={(e) => setRepairProcessingFee(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Engineering Costs</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={200} step={5} value={repairEngineeringCosts} onChange={(e) => setRepairEngineeringCosts(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairEngineeringCosts} min={0} max={200} step={5} onChange={(e) => setRepairEngineeringCosts(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Deployment/Network Maint.</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={200} step={5} value={repairDeploymentCosts} onChange={(e) => setRepairDeploymentCosts(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairDeploymentCosts} min={0} max={200} step={5} onChange={(e) => setRepairDeploymentCosts(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Repair Progression & Invoicing</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={200} step={5} value={repairInvoicingCosts} onChange={(e) => setRepairInvoicingCosts(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">£</span>
+                              <input type="number" value={repairInvoicingCosts} min={0} max={200} step={5} onChange={(e) => setRepairInvoicingCosts(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right pr-2 pl-7 bg-slate-100 text-slate-800" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Litigation Cost %</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={10} step={0.1} value={repairLitigationCost} onChange={(e) => setRepairLitigationCost(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <input type="number" value={repairLitigationCost} min={0} max={10} step={0.1} onChange={(e) => setRepairLitigationCost(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="block text-sm font-medium text-slate-600">Litigation Likelihood %</label>
+                          <div className="flex items-center space-x-3">
+                            <input type="range" min={0} max={100} step={1} value={repairLitigationRate} onChange={(e) => setRepairLitigationRate(Number(e.target.value))} className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer" />
+                            <div className="relative w-32">
+                              <input type="number" value={repairLitigationRate} min={0} max={100} step={1} onChange={(e) => setRepairLitigationRate(Number(e.target.value))} className="text-sm font-semibold w-full py-1.5 rounded-md text-right px-2 bg-slate-100 text-slate-800" />
+                              <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">%</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </aside>
+
+              <div className="lg:col-span-8 space-y-6">
+                <section className="bg-white p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-bold mb-4 text-slate-700">
+                    Combined Results for: <span className="text-indigo-600">{calculatedData.caseTypeName}</span>
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
+                      <h3 className="text-sm font-medium text-slate-500 flex items-center justify-center">
+                        <TrendingUp className="text-green-500" />
+                        <span className="ml-2">Total Axitech Revenue</span>
+                      </h3>
+                      <p className="font-bold mt-2 text-3xl text-slate-800">
+                        £{calculatedData.combined.axitechTotalRevenue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                      </p>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
+                      <h3 className="text-sm font-medium text-slate-500 flex items-center justify-center">
+                        <Handshake className={calculatedData.combined.partnerTotalProfitLoss >= 0 ? 'text-blue-500' : 'text-red-500'} />
+                        <span className="ml-2">Total Partner Net Profit/Loss</span>
+                      </h3>
+                      <p className="font-bold mt-2 text-3xl text-slate-800">
+                        £{calculatedData.combined.partnerTotalProfitLoss.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                      </p>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl text-center border border-slate-200">
+                      <h3 className="text-sm font-medium text-slate-500 flex items-center justify-center">
+                        <Percent className="text-purple-500" />
+                        <span className="ml-2">Revenue Split</span>
+                        <span className="ml-1 text-xs text-slate-400">(Axitech / Partner)</span>
+                      </h3>
+                      <p className="font-bold mt-2 text-3xl text-slate-800">
+                        {calculatedData.combined.axitechRevenueSplit === 0 && calculatedData.combined.partnerRevenueSplit === 0 ? 'N/A' : 
+                         `${Math.round(calculatedData.combined.axitechRevenueSplit)}% / ${Math.round(calculatedData.combined.partnerRevenueSplit)}%`}
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="bg-white p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-bold mb-4 flex items-center text-slate-700">
+                    <DollarSign className="mr-2 h-5 w-5" />
+                    Summary Breakdown
+                  </h2>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left font-semibold text-slate-600 pb-2">Component</th>
+                        <th className="text-right font-semibold text-slate-600 pb-2">Axitech Revenue</th>
+                        <th className="text-right font-semibold text-slate-600 pb-2">Partner Profit/Loss</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="py-2 text-slate-700 font-medium">Credit Hire</td>
+                        <td className="text-right font-mono">£{calculatedData.hire.axitechFee.toFixed(2)}</td>
+                        <td className={`text-right font-mono ${calculatedData.hire.enterprisePNL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          £{calculatedData.hire.enterprisePNL.toFixed(2)}
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="py-2 text-slate-700 font-medium">Credit Repair</td>
+                        <td className="text-right font-mono">£{calculatedData.repair.axitechCommission.toFixed(2)}</td>
+                        <td className={`text-right font-mono ${calculatedData.repair.enterprisePNL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          £{calculatedData.repair.enterprisePNL.toFixed(2)}
+                        </td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr className="font-bold text-slate-800">
+                        <td className="py-3">Total</td>
+                        <td className="text-right text-lg font-mono">£{calculatedData.combined.axitechTotalRevenue.toFixed(2)}</td>
+                        <td className={`text-right text-lg font-mono ${calculatedData.combined.partnerTotalProfitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          £{calculatedData.combined.partnerTotalProfitLoss.toFixed(2)}
+                        </td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </section>
+
+                <section className="bg-white p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-bold mb-4 flex items-center text-slate-700">
+                    <Car className="mr-2 h-5 w-5" />
+                    Hire Model Breakdown
+                  </h2>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Hire Revenue</div>
+                      <div className="font-semibold w-32 text-right text-slate-700">£{calculatedData.hire.revenue.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">{isSubscriber ? "Blended Admin Fee" : "Admin Fee/Uplift"}</div>
+                      <div className="font-semibold w-32 text-right text-green-600">£{calculatedData.hire.effectiveAdminFee.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Gross Invoice</div>
+                      <div className="w-32 text-right text-slate-700">£{calculatedData.hire.grossInvoice.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Bad Debt Provision</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.badDebtProvision.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Net After Bad Debt</div>
+                      <div className="w-32 text-right text-slate-700">£{calculatedData.hire.netAfterBadDebt.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Internal Process Cost</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{internalProcessCost.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Net After Process Cost</div>
+                      <div className="w-32 text-right text-slate-700">£{calculatedData.hire.netAfterProcessCost.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Rental Supply Cost</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.rentalSupplyCost.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Profit Before Axitech Fee</div>
+                      <div className="w-32 text-right text-slate-700">£{calculatedData.hire.profitBeforeAxitechFee.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Axitech Hire Fee</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.axitechFee.toFixed(2)}</div>
+                    </div>
+                    <hr className="my-2 border-slate-300" />
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Hire Model Net Profit/Loss</div>
+                      <div className={`w-32 text-right ${calculatedData.hire.modelNetProfitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        £{calculatedData.hire.modelNetProfitLoss.toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="bg-white p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-bold mb-4 flex items-center text-slate-700">
+                    <Wrench className="mr-2 h-5 w-5" />
+                    Repair Model Breakdown
+                  </h2>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Gross Repair Invoice</div>
+                      <div className="font-semibold w-32 text-right text-slate-700">£{calculatedData.repair.grossInvoice.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Gross BLD Revenue</div>
+                      <div className="font-semibold w-32 text-right text-green-600">£{calculatedData.repair.bldRevenue.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Admin Fee</div>
+                      <div className="font-semibold w-32 text-right text-green-600">£{repairAdminFee.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Other Revenue (Engineering)</div>
+                      <div className="font-semibold w-32 text-right text-green-600">£{repairEngineeringRevenue.toFixed(2)}</div>
+                    </div>
+                    <hr />
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Cost of Capital</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.costOfCapital.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Bad Debt Provision</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.badDebtProvision.toFixed(2)}</div>
+                    </div>
+                    {isSubscriber && (
+                      <div className="flex justify-between items-center text-sm">
+                        <div className="text-slate-600">Subscriber Discount</div>
+                        <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.subscriberDiscount.toFixed(2)}</div>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Axitech Repair Fee</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{repairAxitechCommission.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Repair Processing Fee</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{repairProcessingFee.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Engineering Costs</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{repairEngineeringCosts.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Deployment/Network Maint.</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{repairDeploymentCosts.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Repair Progression & Invoicing</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{repairInvoicingCosts.toFixed(2)}</div>
+                    </div>
+                    <div className="flex justify-between items-center text-sm">
+                      <div className="text-slate-600">Expected Litigation Cost</div>
+                      <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.expectedLitigationCost.toFixed(2)}</div>
+                    </div>
+                    <hr className="my-2 border-slate-300" />
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Repair Model Net Profit/Loss</div>
+                      <div className={`w-32 text-right ${calculatedData.repair.modelNetProfitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        £{calculatedData.repair.modelNetProfitLoss.toFixed(2)}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="bg-white p-6 rounded-xl shadow-lg">
+                  <h2 className="text-xl font-bold mb-4 flex items-center text-slate-700">
+                    <Building className="mr-2 h-5 w-5" />
+                    Enterprise Revenue Breakdown
+                  </h2>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-md font-semibold pt-2 text-slate-700">Hire P&L</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Hire Revenue</div>
+                          <div className="font-semibold w-32 text-right text-green-600">£{calculatedData.hire.revenue.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Hire Admin Fee</div>
+                          <div className="font-semibold w-32 text-right text-green-600">£{calculatedData.hire.effectiveAdminFee.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Total Hire Income</div>
+                          <div className="w-32 text-right text-slate-700">£{calculatedData.combined.enterpriseHireIncome.toFixed(2)}</div>
+                        </div>
+                        <hr />
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Rental Supply Cost</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.rentalSupplyCost.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Internal Process Cost</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{internalProcessCost.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Axitech Hire Fee</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.axitechFee.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Unrecovered Hire Bad Debt</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.hire.badDebtProvision.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Total Hire Costs</div>
+                          <div className="w-32 text-right text-slate-700">-£{calculatedData.combined.enterpriseHireCosts.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Hire Net Profit/Loss</div>
+                          <div className={`w-32 text-right ${calculatedData.hire.enterprisePNL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            £{calculatedData.hire.enterprisePNL.toFixed(2)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr className="my-4" />
+
+                    <div>
+                      <h3 className="text-md font-semibold pt-2 text-slate-700">Repair P&L</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Repair BLD Revenue</div>
+                          <div className="font-semibold w-32 text-right text-green-600">£{calculatedData.repair.bldRevenue.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Repair Admin Fee</div>
+                          <div className="font-semibold w-32 text-right text-green-600">£{repairAdminFee.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Engineering Revenue</div>
+                          <div className="font-semibold w-32 text-right text-green-600">£{repairEngineeringRevenue.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Total Repair Income</div>
+                          <div className="w-32 text-right text-slate-700">£{calculatedData.combined.enterpriseRepairIncome.toFixed(2)}</div>
+                        </div>
+                        <hr />
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Cost of Capital</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.costOfCapital.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Unrecovered Repair Bad Debt</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.badDebtProvision.toFixed(2)}</div>
+                        </div>
+                        {isSubscriber && (
+                          <div className="flex justify-between items-center text-sm">
+                            <div className="text-slate-600">Subscriber Discount</div>
+                            <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.subscriberDiscount.toFixed(2)}</div>
+                          </div>
+                        )}
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Axitech Repair Fee</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{repairAxitechCommission.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Engineering Costs</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{repairEngineeringCosts.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Other OpEx*</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{(repairProcessingFee + repairDeploymentCosts + repairInvoicingCosts).toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <div className="text-slate-600">Expected Litigation Cost</div>
+                          <div className="font-semibold w-32 text-right text-red-500">-£{calculatedData.repair.expectedLitigationCost.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Total Repair Costs</div>
+                          <div className="w-32 text-right text-slate-700">-£{calculatedData.combined.enterpriseRepairCosts.toFixed(2)}</div>
+                        </div>
+                        <div className="flex justify-between items-center text-sm font-bold">
+                          <div className="text-slate-600">Repair Net Profit/Loss</div>
+                          <div className={`w-32 text-right ${calculatedData.repair.enterprisePNL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            £{calculatedData.repair.enterprisePNL.toFixed(2)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <hr className="my-2 border-slate-300" />
+                    
+                    <div className="flex justify-between items-center text-sm font-bold">
+                      <div className="text-slate-600">Total Enterprise Net Profit/Loss</div>
+                      <div className={`w-32 text-right ${calculatedData.combined.partnerTotalProfitLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        £{calculatedData.combined.partnerTotalProfitLoss.toFixed(2)}
+                      </div>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t">
+                      <h3 className="text-md font-semibold text-slate-700 mb-3">Margin Analysis</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-center">
+                        <div className="bg-slate-100 p-3 rounded-lg">
+                          <div className="text-sm text-slate-500">Hire Margin</div>
+                          <div className="text-xl font-bold text-blue-600">{calculatedData.combined.hireMargin.toFixed(1)}%</div>
+                        </div>
+                        <div className="bg-slate-100 p-3 rounded-lg">
+                          <div className="text-sm text-slate-500">Repair Margin</div>
+                          <div className="text-xl font-bold text-orange-600">{calculatedData.combined.repairMargin.toFixed(1)}%</div>
+                        </div>
+                        <div className="bg-slate-100 p-3 rounded-lg">
+                          <div className="text-sm text-slate-500">Blended Margin</div>
+                          <div className="text-xl font-bold text-purple-600">{calculatedData.combined.blendedMargin.toFixed(1)}%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </div>
+            </main>
+
+            <footer className="container mx-auto p-4 md:p-6 text-center text-xs text-slate-500">
+              <p>Note: All fee amounts shown are ex VAT.</p>
+              <p className="font-bold text-red-600 mt-2">STRICTLY PRIVATE & CONFIDENTIAL © Axitech Group Limited 2025</p>
+            </footer>
+          </div>
+        );
+      };
+
+      // Initialize the app
+      const root = createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
