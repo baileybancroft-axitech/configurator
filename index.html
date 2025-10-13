@@ -255,7 +255,6 @@
                 avgRepairInvoice: 2500,
                 avgNewVehicleRevenue: 30000,
                 aCall_on_tcsAcceptanceRate: 92,
-                aCall_off_tcsAcceptanceRate: 20,
             };
 
             // --- STATE MANAGEMENT ---
@@ -285,6 +284,7 @@
                 eCall_on_totalLossRepurchaseOppRate: 65,
                 eCall_on_nonFaultFee: 500,
                 aCall_off_detectionRate: 50,
+                aCall_off_tcsAcceptanceRate: 20,
                 aCall_off_dashboardRejectRate: 80,
                 aCall_off_totalLossRate: 6.9,
                 aCall_off_nonFaultRate: 44,
@@ -435,7 +435,6 @@
                                     { type: 'leakage', value: emergencyLost, label: `Emergency Events (${state.eCall_off_emergencyAcnSplit}%)`, desc: 'Lost due to lack of contextual, sensitive follow-up with driver.' }
                                 ]
                             },
-                            { type: 'uplift', value: captiveRepairs, label: `Captive Parts (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
                             { type: 'end', value: totalRepairsLeaked, label: 'Total Repairs Leaked (ex. Total Loss)', desc: 'The total number of repair opportunities lost from the BMW approved network.' }
                         ]
                     }
@@ -496,7 +495,6 @@
                                     { type: 'uplift', value: emergencyCaptured, label: `Emergency Events (${state.eCall_on_emergencyAcnSplit}%)`, desc: 'Gained due to accident support team providing contextual and sensitive follow-up to affected drivers.' }
                                 ]
                             },
-                            { type: 'uplift', value: captiveFromUncaptured, label: `Captive Parts from Remainder (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
                             { type: 'end', value: deployments, label: 'Total Repairs Converted (ex. Total Loss)', desc: 'The total number of converted repairs into the BMW approved network.' }
                         ]
                     }
@@ -507,9 +505,8 @@
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detected = totalAccidents * p('aCall_off_detectionRate');
 
-                // --- Start of Chained Calculation for funnel and final numbers ---
-                const afterTcs = detected * p('aCall_off_tcsAcceptanceRate');
-                const tcsLost = detected - afterTcs;
+                const tcsLost = detected * (1 - p('aCall_off_tcsAcceptanceRate'));
+                const afterTcs = detected - tcsLost;
                 
                 const dashboardRejectLost = afterTcs * p('aCall_off_dashboardRejectRate');
                 const afterDashboard = afterTcs - dashboardRejectLost;
@@ -520,7 +517,6 @@
                 const totalRepairablePool = detected * (1- p('aCall_off_totalLossRate'));
                 const totalRepairsLeaked = totalRepairablePool - captiveRepairs;
 
-                // Card values
                 const opportunities = totalRepairablePool;
                 const deployments = totalRepairsLeaked;
                 const totalNoTotalLoss = detected * p('aCall_off_totalLossRate');
@@ -546,7 +542,6 @@
                             { type: 'info', value: detected, label: `Total Accidents Detected (${state.aCall_off_detectionRate}%)`, desc: 'The total number of annual crashes that trigger aCall detection.'},
                             { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${(100 - state.aCall_off_tcsAcceptanceRate).toFixed(0)}%)`, desc: 'The total number of BMW drivers that have not opted-in to aCall proactive engagement from BMW Accident Support, or rejected this option.'},
                             { type: 'leakage', value: dashboardRejectLost, label: `Reject in Dashboard (${state.aCall_off_dashboardRejectRate}%)`, desc: 'The number of drivers who reject the aCall service offering when it appears in the BMW dashboard after a collision.' },
-                            { type: 'uplift', value: captiveRepairs, label: `Captive Parts (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
                             { type: 'end', value: totalRepairsLeaked, label: 'Total Repairs Leaked (ex. Total Loss)', desc: 'The total number of repair opportunities lost from the BMW approved network.' }
                         ]
                     }
@@ -706,8 +701,8 @@
                 state.avgRepairInvoice = parseFloat(dom.avgRepairInvoice.value) || 0;
                 state.avgNewVehicleRevenue = parseFloat(dom.avgNewVehicleRevenue.value) || 0;
                 state.aCall_on_tcsAcceptanceRate = parseFloat(dom.aCallOnTcsAccept.value) || 0;
-
-                 for (const containerId in settingsMap) {
+                
+                for (const containerId in settingsMap) {
                     if (settingsMap.hasOwnProperty(containerId)) {
                         settingsMap[containerId].forEach(setting => {
                             const inputElement = document.getElementById(setting.key);
@@ -753,7 +748,6 @@
                             }
                         });
                         
-                        // Also reset settings inputs
                         Object.keys(settingsMap).forEach(containerId => {
                             settingsMap[containerId].forEach(setting => {
                                 const input = document.getElementById(setting.key);
@@ -891,6 +885,5 @@
     </script>
 </body>
 </html>
-
 
 
