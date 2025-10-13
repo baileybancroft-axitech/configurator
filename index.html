@@ -7,250 +7,207 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a1a1a; /* Darker grey background */
-            color: #ffffff; /* White */
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F7F8FA; 
         }
-        .bg-gray-800 { background-color: #262626; } /* New section/card background */
-        .bg-gray-700 { background-color: #404040; } /* Slightly lighter grey for elements */
-        .border-gray-700 { border-color: #404040; }
-        .text-gray-400 { color: #a3a3a3; } /* Lighter grey for secondary text */
-        .text-gray-200 { color: #e5e7eb; }
 
-        /* Custom Toggle Switch Styles */
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #D1D5DB; /* gray-300 */
+        /* --- New Component Styles --- */
+        .panel {
+            background-color: #FFFFFF;
+            border-radius: 1rem; /* 16px */
+            border: 1px solid #E5E7EB;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
         }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #059669; /* green-600 */
-        }
-        .leakage-card {
-            background-color: #450a0a; /* red-950 */
-            border-color: #7f1d1d; /* red-800 */
-            color: #ffffff; /* White text for contrast */
-        }
-        .uplift-card {
-            background-color: #064e3b; /* green-900 */
-            border-color: #047857; /* green-700 */
-            color: #ffffff; /* White text for contrast */
-        }
-        /* Custom Slider Styles */
-        .slider {
-            -webkit-appearance: none;
+        .main-title { color: #111827; }
+        .subtitle { color: #6B7280; }
+        .section-title { color: #111827; }
+        
+        /* Segmented Control for Toggles */
+        .segmented-control {
+            display: flex;
+            background-color: #F3F4F6;
+            border-radius: 0.75rem;
+            padding: 0.25rem;
             width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #404040; /* New slider track color */
-            outline: none;
-            opacity: 0.9;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
         }
-        .slider:hover {
-            opacity: 1;
-        }
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ffffff; /* White thumb */
+        .segmented-control button {
+            flex: 1;
+            padding: 0.5rem 0;
+            border-radius: 0.6rem;
+            border: none;
+            background-color: transparent;
+            color: #6B7280;
+            font-weight: 600;
+            font-size: 0.875rem;
             cursor: pointer;
+            transition: all 0.2s ease-in-out;
         }
-        .slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ffffff; /* White thumb */
-            cursor: pointer;
+        .segmented-control button.active {
+            background-color: #FFFFFF;
+            color: #111827;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
         }
-        /* Hide scrollbar for number inputs in settings */
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+
+        /* Custom Slider Styles */
+        .slider { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: #E5E7EB; outline: none; opacity: 0.9; transition: opacity .2s; }
+        .slider:hover { opacity: 1; }
+        .slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #3B82F6; cursor: pointer; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); }
+        .slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #3B82F6; cursor: pointer; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px rgba(0,0,0,0.1); }
+        
+        /* Funnel Box Styles */
+        .funnel-box {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            padding: 1.25rem;
+            border-radius: 1rem;
+            text-align: center;
         }
-        input[type=number] {
-            -moz-appearance: textfield;
+        .funnel-box.leakage { border-top: 4px solid #EF4444; }
+        .funnel-box.uplift { border-top: 4px solid #22C55E; }
+        .funnel-box.info, .funnel-box.start, .funnel-box.end { border-top: 4px solid #6B7280; }
+        
+        /* Settings Input */
+        .settings-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #D1D5DB;
+            background-color: #F9FAFB;
+            color: #111827;
         }
-        .funnel-box-leakage {
-            background-color: #450a0a; /* red-950 */
-            border-color: #7f1d1d; /* red-800 */
-            color: #ffffff;
+        .settings-input:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
         }
-        .funnel-box-uplift {
-            background-color: #064e3b; /* green-900 */
-            border-color: #047857; /* green-700 */
-            color: #ffffff;
-        }
-        .funnel-box-info {
-            background-color: #262626; /* grey-800 */
-            border-color: #404040; /* grey-700 */
-            color: #ffffff;
-        }
-        .funnel-box-start {
-            background-color: #262626; /* grey-800 */
-            border-color: #404040; /* grey-700 */
-            color: #ffffff;
-        }
-        .funnel-arrow-icon {
-            color: #525252; /* Darker grey for icon */
-        }
-        input[type="number"] {
-            background-color: #404040; /* Input background */
-            border-color: #525252; /* Input border */
-        }
+
     </style>
 </head>
-<body class="antialiased">
+<body class="antialiased text-gray-800">
 
-    <div id="app" class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+    <div id="app" class="max-w-screen-2xl mx-auto p-4 sm:p-6 lg:p-8">
         
         <header class="mb-8 flex items-center space-x-4">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" alt="BMW Logo" class="h-10 w-10">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" alt="BMW Logo" class="h-12 w-12">
             <div>
-                <h1 class="text-3xl font-bold text-white">BMW Collision Programme Calculator</h1>
-                <p class="mt-1 text-gray-400">Model leakage and uplift for eCall & aCall programmes.</p>
+                <h1 class="text-3xl font-bold main-title">BMW Collision Programme Calculator</h1>
+                <p class="mt-1 subtitle">Model leakage and uplift for eCall & aCall programmes.</p>
             </div>
         </header>
 
-        <!-- Tabs --><div class="mb-6 border-b border-gray-700">
-            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
-                <button id="tab-calculator" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-white border-white">
-                    Calculator
-                </button>
-                <button id="tab-settings" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-gray-400 hover:text-gray-200 hover:border-gray-500 border-transparent">
-                    Settings
-                </button>
-            </nav>
-        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column: Inputs -->
+            <div class="lg:col-span-1 space-y-8">
+                <div class="panel p-6">
+                    <div class="flex items-center justify-between mb-6">
+                         <h2 class="text-xl font-bold section-title">Global Inputs</h2>
+                         <div>
+                            <button id="tab-calculator" class="px-3 py-1 text-sm font-semibold rounded-md bg-blue-100 text-blue-700">Calculator</button>
+                            <button id="tab-settings" class="px-3 py-1 text-sm font-semibold rounded-md text-gray-600">Settings</button>
+                         </div>
+                    </div>
 
-        <!-- Main Content --><main>
-            <!-- Calculator View --><div id="view-calculator">
-                <!-- Global Inputs --><section class="bg-gray-800 p-6 rounded-xl shadow-sm mb-8">
-                    <h2 class="text-xl font-semibold mb-6 text-white">Mission Control</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+                    <div id="view-calculator" class="space-y-6">
                         <div>
-                            <label for="totalConnectedCarParc" class="block text-sm font-medium text-white">Total Connected Car Parc</label>
+                            <label for="totalConnectedCarParc" class="block text-sm font-bold text-gray-700">Total Connected Car Parc</label>
                             <input type="range" id="totalConnectedCarParc" min="500000" max="4000000" value="2100000" step="100000" class="mt-2 block w-full slider">
-                            <span id="totalConnectedCarParcValue" class="font-semibold text-white text-sm mt-2 block text-center">1,200,000</span>
+                            <span id="totalConnectedCarParcValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">2,100,000</span>
                         </div>
                         <div>
-                            <label for="annualCrashRate" class="block text-sm font-medium text-white">Annual Crash Rate (%)</label>
+                            <label for="annualCrashRate" class="block text-sm font-bold text-gray-700">Annual Crash Rate (%)</label>
                             <input type="range" id="annualCrashRate" min="1" max="20" value="7" class="mt-2 block w-full slider">
-                            <span id="annualCrashRateValue" class="font-semibold text-white text-sm mt-2 block text-center">6%</span>
+                            <span id="annualCrashRateValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">7%</span>
                         </div>
                         <div>
-                            <label for="avgRepairInvoice" class="block text-sm font-medium text-white">Avg. Repair Invoice</label>
+                            <label for="avgRepairInvoice" class="block text-sm font-bold text-gray-700">Avg. Repair Invoice</label>
                             <input type="range" id="avgRepairInvoice" min="1000" max="10000" value="2500" step="100" class="mt-2 block w-full slider">
-                            <span id="avgRepairInvoiceValue" class="font-semibold text-white text-sm mt-2 block text-center">£2,500</span>
+                            <span id="avgRepairInvoiceValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£2,500</span>
                         </div>
                         <div>
-                            <label for="avgNewVehicleRevenue" class="block text-sm font-medium text-white">Avg. New Vehicle Sale Revenue</label>
+                            <label for="avgNewVehicleRevenue" class="block text-sm font-bold text-gray-700">Avg. New Vehicle Sale Revenue</label>
                             <input type="range" id="avgNewVehicleRevenue" min="5000" max="50000" value="30000" step="100" class="mt-2 block w-full slider">
-                            <span id="avgNewVehicleRevenueValue" class="font-semibold text-white text-sm mt-2 block text-center">£5,000</span>
+                            <span id="avgNewVehicleRevenueValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£30,000</span>
                         </div>
-                    </div>
-                     <div class="mt-8 pt-6 border-t border-gray-700 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                        <div class="flex items-center justify-between">
-                            <span class="font-medium text-white">Mission Control eCall (ACN)</span>
-                             <div class="flex items-center space-x-3">
-                                <span class="text-sm text-gray-400">Off</span>
-                                <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                                    <input type="checkbox" name="eCallToggle" id="eCallToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                                    <label for="eCallToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
-                                </div>
-                                <span class="text-sm font-semibold text-white">On</span>
+                         <div class="pt-4 border-t border-gray-200">
+                             <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control eCall (ACN)</label>
+                             <div class="segmented-control" id="eCallToggleContainer">
+                                <button data-value="false" class="active">Off</button>
+                                <button data-value="true">On</button>
                             </div>
                         </div>
-                        <div class="flex items-center justify-between">
-                             <span class="font-medium text-white">Mission Control aCall</span>
-                             <div class="flex items-center space-x-3">
-                                <span class="text-sm text-gray-400">Off</span>
-                                <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                                    <input type="checkbox" name="aCallToggle" id="aCallToggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                                    <label for="aCallToggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-700 cursor-pointer"></label>
-                                </div>
-                                <span class="text-sm font-semibold text-white">On</span>
+                        <div>
+                             <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control aCall</label>
+                             <div class="segmented-control" id="aCallToggleContainer">
+                                <button data-value="false" class="active">Off</button>
+                                <button data-value="true">On</button>
                             </div>
                         </div>
                     </div>
-                </section>
-                
-                 <!-- Combined Overview Section --><section id="combinedOverview" class="mb-8">
-                     <div class="bg-gray-800 p-6 rounded-xl shadow-sm">
-                        <h2 class="text-2xl font-bold text-white mb-4">Combined Programme Overview</h2>
-                        <div id="combinedResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <!-- Combined results here --></div>
-                    </div>
-                </section>
-
-
-                <!-- eCall Section --><section id="eCallSection" class="mb-8 transition-all duration-300">
-                    <div class="bg-gray-800 p-6 rounded-xl shadow-sm">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-2xl font-bold text-white">eCall Programme</h2>
-                            <span id="eCallStatus" class="font-semibold px-3 py-1 text-sm rounded-full"></span>
-                        </div>
-
-                        <!-- Results Cards --><div id="eCallResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"></div>
-                        
-                        <!-- Breakdown Funnel --><div id="eCallBreakdown" class="mt-6 pt-6 border-t border-gray-700"></div>
-                    </div>
-                </section>
-
-                <!-- aCall Section --><section id="aCallSection" class="transition-all duration-300">
-                    <div class="bg-gray-800 p-6 rounded-xl shadow-sm">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="text-2xl font-bold text-white">aCall Programme</h2>
-                            <span id="aCallStatus" class="font-semibold px-3 py-1 text-sm rounded-full"></span>
-                        </div>
-
-                        <!-- Results Cards --><div id="aCallResults" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"></div>
-
-                        <!-- Breakdown Funnel --><div id="aCallBreakdown" class="mt-6 pt-6 border-t border-gray-700"></div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- Settings View --><div id="view-settings" class="hidden">
-                 <div class="bg-gray-800 p-6 rounded-xl shadow-sm">
-                    <p class="text-gray-400 mb-6">Adjust the constants for each calculation model. Changes are applied instantly.</p>
-                    <div class="space-y-8">
-                        
-                        <!-- eCall Settings --><div>
-                            <h3 class="text-lg font-semibold border-b border-gray-700 pb-2 mb-4 text-white">eCall Constants</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                                <div id="settings-eCall-off" class="space-y-3 p-4 border border-gray-700 rounded-lg">
-                                    <p class="font-medium text-white">Current Programme (Leakage)</p>
-                                </div>
-                                <div id="settings-eCall-on" class="space-y-3 p-4 border border-gray-700 rounded-lg">
-                                    <p class="font-medium text-white">Axitech Programme (Uplift)</p>
-                                </div>
+                    
+                    <div id="view-settings" class="hidden space-y-6">
+                        <div>
+                            <h3 class="text-md font-bold text-gray-800 mb-2">eCall Constants</h3>
+                            <div class="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <div id="settings-eCall-off" class="space-y-3"></div>
+                                <div id="settings-eCall-on" class="space-y-3 pt-3 border-t border-gray-200"></div>
                             </div>
                         </div>
-
-                        <!-- aCall Settings --><div>
-                            <h3 class="text-lg font-semibold border-b border-gray-700 pb-2 mb-4 text-white">aCall Constants</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
-                                <div id="settings-aCall-off" class="space-y-3 p-4 border border-gray-700 rounded-lg">
-                                    <p class="font-medium text-white">Current Programme (Leakage)</p>
-                                </div>
-                                <div id="settings-aCall-on" class="space-y-3 p-4 border border-gray-700 rounded-lg">
-                                    <p class="font-medium text-white">Axitech Programme (Uplift)</p>
-                                </div>
-                            </div>
+                        <div>
+                             <h3 class="text-md font-bold text-gray-800 mb-2">aCall Constants</h3>
+                             <div class="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <div id="settings-aCall-off" class="space-y-3"></div>
+                                <div id="settings-aCall-on" class="space-y-3 pt-3 border-t border-gray-200"></div>
+                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-        </main>
+
+            <!-- Right Column: Results -->
+            <div class="lg:col-span-2 space-y-8">
+                <section id="combinedOverview" class="panel p-6">
+                    <h2 class="text-xl font-bold section-title mb-4">Combined Programme Overview</h2>
+                    <div id="combinedResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                </section>
+
+                <section id="eCallSection" class="panel">
+                    <button class="w-full p-6 text-left" data-collapsible-trigger="eCallContent">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold section-title">eCall Programme</h2>
+                            <div class="flex items-center space-x-4">
+                               <span id="eCallStatus" class="font-semibold px-3 py-1 text-xs rounded-full"></span>
+                               <svg data-collapsible-icon class="w-5 h-5 text-gray-500 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </button>
+                    <div id="eCallContent" class="px-6 pb-6 space-y-6">
+                        <div id="eCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                        <div id="eCallBreakdown" class="pt-6 border-t border-gray-200"></div>
+                    </div>
+                </section>
+
+                <section id="aCallSection" class="panel">
+                     <button class="w-full p-6 text-left" data-collapsible-trigger="aCallContent">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold section-title">aCall Programme</h2>
+                            <div class="flex items-center space-x-4">
+                                <span id="aCallStatus" class="font-semibold px-3 py-1 text-xs rounded-full"></span>
+                                <svg data-collapsible-icon class="w-5 h-5 text-gray-500 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
+                    </button>
+                    <div id="aCallContent" class="px-6 pb-6 space-y-6">
+                        <div id="aCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                        <div id="aCallBreakdown" class="pt-6 border-t border-gray-200"></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -322,8 +279,8 @@
                 avgRepairInvoiceValue: document.getElementById('avgRepairInvoiceValue'),
                 avgNewVehicleRevenue: document.getElementById('avgNewVehicleRevenue'),
                 avgNewVehicleRevenueValue: document.getElementById('avgNewVehicleRevenueValue'),
-                eCallToggle: document.getElementById('eCallToggle'),
-                aCallToggle: document.getElementById('aCallToggle'),
+                eCallToggleContainer: document.getElementById('eCallToggleContainer'),
+                aCallToggleContainer: document.getElementById('aCallToggleContainer'),
                 eCallResults: document.getElementById('eCallResults'),
                 eCallBreakdown: document.getElementById('eCallBreakdown'),
                 eCallStatus: document.getElementById('eCallStatus'),
@@ -335,6 +292,7 @@
                 settingsECallOn: document.getElementById('settings-eCall-on'),
                 settingsACallOff: document.getElementById('settings-aCall-off'),
                 settingsACallOn: document.getElementById('settings-aCall-on'),
+                collapsibleTriggers: document.querySelectorAll('[data-collapsible-trigger]'),
             };
             
             // --- SETTINGS MAPPING ---
@@ -398,24 +356,29 @@
             function calculateECallOff() {
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detectedAccidents = totalAccidents * p('eCall_off_acnDetectionRate');
-                const totalEmergency = detectedAccidents * p('eCall_off_emergencyAcnSplit');
-                const totalNonEmergency = detectedAccidents * p('eCall_off_nonEmergencyAcnSplit');
-                const emergencyLost = totalEmergency * p('eCall_off_inverseCaptivePartsRate');
-                const nonEmergencyLost = totalNonEmergency * p('eCall_off_inverseCaptivePartsRate');
                 
-                const totalNoTotalLoss = detectedAccidents * p('eCall_off_totalLossRate');
-                const totalRepairableEvents = detectedAccidents - totalNoTotalLoss;
-                const opportunities = totalRepairableEvents;
-                const deployments = totalRepairableEvents * p('eCall_off_inverseCaptivePartsRate');
-                const repurchases = totalNoTotalLoss * p('eCall_off_totalLossRepurchaseOppRate');
-                const revenue = (deployments * state.avgRepairInvoice) + ((deployments * p('eCall_off_nonFaultRateForRevenue')) * state.eCall_off_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
-                const totalRepairsLeaked = nonEmergencyLost + emergencyLost;
-                const captiveRepairs = totalRepairableEvents * (1 - p('eCall_off_inverseCaptivePartsRate'));
+                const captiveRepairs = detectedAccidents * (1 - p('eCall_off_inverseCaptivePartsRate'));
                 const captiveRate = 100 - state.eCall_off_inverseCaptivePartsRate;
 
+                const totalNoTotalLoss = detectedAccidents * p('eCall_off_totalLossRate');
+                const totalRepairableEvents = detectedAccidents - totalNoTotalLoss;
+                
+                const totalRepairsLeaked = totalRepairableEvents - captiveRepairs;
+
+                const totalLeakedRepairable = totalRepairsLeaked;
+                const nonEmergencyRatio = state.eCall_off_nonEmergencyAcnSplit / (state.eCall_off_nonEmergencyAcnSplit + state.eCall_off_emergencyAcnSplit);
+                
+                const nonEmergencyLost = totalLeakedRepairable * nonEmergencyRatio;
+                const emergencyLost = totalLeakedRepairable * (1 - nonEmergencyRatio);
+
+                const opportunities = totalRepairableEvents;
+                const deployments = totalRepairsLeaked;
+                const repurchases = totalNoTotalLoss * p('eCall_off_totalLossRepurchaseOppRate');
+                const revenue = (deployments * state.avgRepairInvoice) + ((deployments * p('eCall_off_nonFaultRateForRevenue')) * state.eCall_off_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
+                
                 return {
                     raw: { opportunities, deployments, repurchases, revenue },
-                    cardClass: 'leakage-card',
+                    cardClass: 'leakage',
                     cards: [
                         { label: 'Total Leaked Repair Opportunities', value: formatNumber(opportunities) },
                         { label: 'Total Leaked Repair Deployments', value: formatNumber(deployments) },
@@ -467,7 +430,7 @@
 
                 return {
                     raw: { opportunities, deployments, repurchases, revenue },
-                    cardClass: 'uplift-card',
+                    cardClass: 'uplift',
                     cards: [
                         { label: 'Total Repair Opportunities Uplift', value: formatNumber(opportunities) },
                         { label: 'Total Repair Deployments Uplift', value: formatNumber(deployments) },
@@ -492,30 +455,29 @@
             function calculateACallOff() {
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detected = totalAccidents * p('aCall_off_detectionRate');
+
+                // Funnel display values
                 const afterTcs = detected * p('aCall_off_tcsAcceptanceRate');
                 const tcsLost = detected - afterTcs;
                 const engaged = afterTcs * p('aCall_off_engagementRate');
                 const engagementLost = afterTcs - engaged;
-                const nonFaultEventsAfterEngagement = engaged * p('aCall_off_nonFaultRate');
-                const faultEventsLost = engaged * p('aCall_off_faultRate');
-                
-                // Calculate actual repairs converted in the "OFF" scenario (minimal)
-                const convertedNonFault = nonFaultEventsAfterEngagement * (1 - p('aCall_off_inverseCaptivePartsRate'));
-                const totalConvertedRepairs = convertedNonFault; // Assuming fault events are fully leaked in OFF scenario
+                const faultEventsLost = engaged * (1 - p('aCall_off_totalLossRate')) * p('aCall_off_faultRate');
 
-                // Total leakage is (detected - totalConvertedRepairs)
-                const totalRepairsLeaked = detected - totalConvertedRepairs;
-
-                // For cards: Total leaked opportunities, deployments, repurchases, and revenue
+                // Core calculations based on new captive parts logic
+                const captiveRepairs = detected * (1 - p('aCall_off_inverseCaptivePartsRate'));
+                const captiveRate = 100 - state.aCall_off_inverseCaptivePartsRate;
                 const totalRepairable = detected * (1 - p('aCall_off_totalLossRate'));
-                const leakedOpportunities = totalRepairable - totalConvertedRepairs; // Opportunities that could have been converted
-                const leakedDeployments = leakedOpportunities * p('aCall_off_inverseCaptivePartsRate'); // Assuming standard leakage rate for "lost" ops
-                const leakedRepurchases = detected * p('aCall_off_totalLossRate') * p('aCall_off_totalLossRateForRepurchase'); // Repurchases that could have been gained
-                const leakedRevenue = (leakedDeployments * state.avgRepairInvoice) + (leakedDeployments * p('aCall_off_nonFaultRateForRevenue') * state.aCall_off_nonFaultFee) + (leakedRepurchases * state.avgNewVehicleRevenue);
+                const totalRepairsLeaked = totalRepairable - captiveRepairs;
+
+                // Card values
+                const leakedOpportunities = totalRepairable;
+                const leakedDeployments = totalRepairsLeaked;
+                const leakedRepurchases = leakedDeployments * p('aCall_off_totalLossRate'); // Corrected calculation based on leaked deployments
+                const leakedRevenue = (leakedDeployments * state.avgRepairInvoice) + ((leakedDeployments * p('aCall_off_nonFaultRateForRevenue')) * state.aCall_off_nonFaultFee) + (leakedRepurchases * state.avgNewVehicleRevenue);
 
                 return {
                     raw: { opportunities: leakedOpportunities, deployments: leakedDeployments, repurchases: leakedRepurchases, revenue: leakedRevenue },
-                    cardClass: 'leakage-card',
+                    cardClass: 'leakage',
                     cards: [
                         { label: 'Total Leaked Repair Opportunities', value: formatNumber(leakedOpportunities) },
                         { label: 'Total Leaked Repair Deployments', value: formatNumber(leakedDeployments) },
@@ -531,6 +493,7 @@
                             { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${100 - state.aCall_off_tcsAcceptanceRate}%)`, desc: 'The total number of BMW drivers that have not opted-in to aCall proactive engagement from BMW Accident Support, or rejected this option.'},
                             { type: 'leakage', value: engagementLost, label: `Lost to Non-Engagement (${100 - state.aCall_off_engagementRate}% of T&C Accepts)`, desc: 'The number of drivers who reject the aCall service offering when it appears in the BMW dashboard after a collision.' },
                             { type: 'leakage', value: faultEventsLost, label: `Fault Events Lost (${state.aCall_off_faultRate}%)`, desc: 'The total number of fault events from the remainder that are leaked through the lack of a fault handling programme.' },
+                            { type: 'uplift', value: captiveRepairs, label: `Captive Parts (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
                             { type: 'end', value: totalRepairsLeaked, label: 'Total Repairs Leaked', desc: 'The total number of repair opportunities lost from the BMW approved network.' }
                         ]
                     }
@@ -557,7 +520,7 @@
 
                 return {
                     raw: { opportunities, deployments, repurchases, revenue },
-                    cardClass: 'uplift-card',
+                    cardClass: 'uplift',
                     cards: [
                         { label: 'Total Repair Opportunities Uplift', value: formatNumber(opportunities) },
                         { label: 'Total Repair Deployments Uplift', value: formatNumber(deployments) },
@@ -569,10 +532,10 @@
                        type: 'sequential',
                        steps: [
                             { type: 'start', value: totalAccidents, label: 'Total Annual Accidents', desc: 'The total number of connected vehicles multiplied by the annual crash rate.' },
-                            { type: 'info', value: detected, label: `Total Accidents Detected (${state.aCall_on_detectionRate}%)`},
-                            { type: 'uplift', value: tcsAccepted, label: `T&Cs Accepted (${state.aCall_on_tcsAcceptanceRate}%)`},
-                            { type: 'uplift', value: engaged, label: `Engaged into Programme (${state.aCall_on_engagementRate}%)` },
-                            { type: 'uplift', value: faultConverted, label: `Fault Events Converted (${state.aCall_on_faultConversion}%)` },
+                            { type: 'info', value: detected, label: `Total Accidents Detected (${state.aCall_on_detectionRate}%)`, desc: 'The total number of annual crashes that trigger aCall detection.'},
+                            { type: 'uplift', value: tcsAccepted, label: `Pre-consented T&Cs (${state.aCall_on_tcsAcceptanceRate}%)`, desc: 'The uplifted number of drivers who accept aCall T&Cs through pre-consent channels.'},
+                            { type: 'uplift', value: engaged, label: `Engaged into Programme (${state.aCall_on_engagementRate}%)`, desc: 'the uplifted number of drivers who engage into aCall service offering through BMW Accident Support team proactive contact with driver.' },
+                            { type: 'uplift', value: faultConverted, label: `Fault Events Converted (${state.aCall_on_faultConversion}%)`, desc: 'Additional number of fault events converted into certified network through implementing fault channel.' },
                             { type: 'end', value: deployments, label: 'Total Repairs Converted', desc: 'The total number of converted repairs into the BMW approved network.' }
                         ]
                     }
@@ -581,92 +544,78 @@
 
             // --- RENDER FUNCTIONS ---
             function renderResults(container, breakdownContainer, data, statusEl) {
+                const cardClasses = {
+                    leakage: 'bg-red-50 border-red-200',
+                    uplift: 'bg-green-50 border-green-200',
+                };
+                const textClasses = {
+                    leakage: 'text-red-700',
+                    uplift: 'text-green-700'
+                }
+
                 container.innerHTML = data.cards.map(card => `
-                    <div class="p-5 rounded-lg border ${data.cardClass} flex flex-col justify-between min-h-[120px]">
-                        <p class="text-base font-semibold">${card.label}</p>
-                        <p class="text-3xl font-bold mt-2 text-right">${card.value}</p>
+                    <div class="p-4 rounded-xl ${cardClasses[data.cardClass]}">
+                        <p class="text-sm font-semibold text-gray-600">${card.label}</p>
+                        <p class="text-3xl font-bold mt-1 ${textClasses[data.cardClass]}">${card.value}</p>
                     </div>
                 `).join('');
 
-                const { steps, type } = data.funnel;
+                const { steps } = data.funnel;
                 const title = data.funnelTitle || 'Funnel';
-                const downArrowIcon = `<svg class="w-8 h-8 funnel-arrow-icon mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>`;
+                const downArrowIcon = `<svg class="w-6 h-6 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>`;
                 
-                let funnelHTML = `<h3 class="text-xl font-bold text-white mb-6 text-center">${title}</h3>`;
+                let funnelHTML = `<h3 class="text-lg font-bold text-gray-800 mb-4 text-center">${title}</h3>`;
                 
-                const createBox = (step, extraClasses = '') => {
-                    const bgClass = step.type === 'leakage' ? 'funnel-box-leakage' :
-                                    step.type === 'uplift' ? 'funnel-box-uplift' :
-                                    'funnel-box-info'; /* Handles info/start/end */
-                    
-                    const descriptionHTML = step.desc ? `<p class="text-sm font-normal opacity-80 mt-2">${step.desc}</p>` : '';
-
+                const createBox = (step) => {
+                     const descriptionHTML = step.desc ? `<p class="text-sm text-gray-500 mt-1">${step.desc}</p>` : '';
                     return `
-                        <div class="flex flex-col justify-between text-center p-5 rounded-lg shadow-sm w-full flex-grow min-h-[160px] border ${bgClass} ${extraClasses}">
+                        <div class="funnel-box ${step.type}">
                             <div>
-                                <p class="text-lg font-bold">${step.label}</p>
+                                <p class="text-md font-bold text-gray-800">${step.label}</p>
                                 ${descriptionHTML}
                             </div>
-                            <p class="text-4xl font-bold mt-3">${formatNumber(step.value)}</p>
+                            <p class="text-4xl font-extrabold text-gray-900 mt-2">${formatNumber(step.value)}</p>
                         </div>`;
                 };
 
-
-                if (type === 'split') {
-                    // This logic branch is not currently used but kept for potential future layouts
-                    const [start, info, parallel1, parallel2, end] = steps;
-                    funnelHTML += '<div class="grid grid-cols-2 gap-4 justify-items-center">';
-                    funnelHTML += `<div class="col-span-2 w-full flex justify-center">${createBox(start, 'w-full max-w-xs')}</div>`;
-                    funnelHTML += `<div class="col-span-2">${downArrowIcon}</div>`;
-                    funnelHTML += `<div class="col-span-2 w-full flex justify-center">${createBox(info, 'w-full max-w-md')}</div>`;
-                    funnelHTML += `<div class="col-span-2">${downArrowIcon}</div>`;
-                    funnelHTML += `<div>${createBox(parallel1)}</div>`;
-                    funnelHTML += `<div>${createBox(parallel2)}</div>`;
-                    funnelHTML += `<div class="col-span-2">${downArrowIcon}</div>`;
-                    funnelHTML += `<div class="col-span-2 w-full flex justify-center">${createBox(end, 'w-full max-w-xs')}</div>`;
-                    funnelHTML += '</div>';
-                } else { // Sequential Funnel
-                    funnelHTML += '<div class="grid grid-cols-1 gap-4 justify-items-center">';
-                    steps.forEach((step, index) => {
-                        funnelHTML += `<div class="w-full flex justify-center">${createBox(step, 'max-w-lg')}</div>`;
-                        if (index < steps.length - 1) {
-                            funnelHTML += `<div>${downArrowIcon}</div>`;
-                        }
-                    });
-                    funnelHTML += '</div>';
-                }
+                funnelHTML += '<div class="grid grid-cols-1 gap-4 justify-items-center">';
+                steps.forEach((step, index) => {
+                    funnelHTML += `<div class="w-full flex justify-center">${createBox(step)}</div>`;
+                    if (index < steps.length - 1) {
+                        funnelHTML += `<div>${downArrowIcon}</div>`;
+                    }
+                });
+                funnelHTML += '</div>';
                 
                 breakdownContainer.innerHTML = funnelHTML;
 
                 // Update Status Badge
                 const isUplift = data.cardClass.includes('uplift');
                 statusEl.textContent = isUplift ? 'Axitech Uplift' : 'Current Leakage';
-                statusEl.className = `font-semibold px-3 py-1 text-sm rounded-full ${isUplift ? 'bg-green-800 text-green-100' : 'bg-red-800 text-red-100'}`;
+                statusEl.className = `font-semibold px-3 py-1 text-xs rounded-full ${isUplift ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`;
             }
 
             function renderOverview(eCallLeakage, eCallUplift, aCallLeakage, aCallUplift) {
                 const totalLeakage = {
                     opps: eCallLeakage.raw.opportunities + aCallLeakage.raw.opportunities,
-                    deps: eCallLeakage.raw.deployments + aCallLeakage.raw.deployments,
                     rev: eCallLeakage.raw.revenue + aCallLeakage.raw.revenue,
                 };
                 const totalUplift = {
                     opps: eCallUplift.raw.opportunities + aCallUplift.raw.opportunities,
-                    deps: eCallUplift.raw.deployments + aCallUplift.raw.deployments,
                     rev: eCallUplift.raw.revenue + aCallUplift.raw.revenue,
                 };
 
                  const cards = [
-                    { label: 'Total Repair Opportunities Leakage', value: formatNumber(totalLeakage.opps), class: 'leakage-card' },
-                    { label: 'Total Potential Repair Opportunities Uplift', value: formatNumber(totalUplift.opps), class: 'uplift-card' },
-                    { label: 'Total Current Revenue Leakage', value: formatCurrency(totalLeakage.rev), class: 'leakage-card' },
-                    { label: 'Total Potential Revenue Uplift', value: formatCurrency(totalUplift.rev), class: 'uplift-card' }
+                    { label: 'Total Repair Opportunities Leakage', value: formatNumber(totalLeakage.opps), class: 'leakage', text: 'text-red-700', bg: 'bg-red-50', border: 'border-red-200' },
+                    { label: 'Total Potential Repair Opportunities Uplift', value: formatNumber(totalUplift.opps), class: 'uplift', text: 'text-green-700', bg: 'bg-green-50', border: 'border-green-200' },
+                    { label: 'Total Current Revenue Leakage', value: formatCurrency(totalLeakage.rev), class: 'leakage', text: 'text-red-700', bg: 'bg-red-50', border: 'border-red-200' },
+                    { label: 'Total Potential Revenue Uplift', value: formatCurrency(totalUplift.rev), class: 'uplift', text: 'text-green-700', bg: 'bg-green-50', border: 'border-green-200' }
                 ];
 
                 dom.combinedResults.innerHTML = cards.map(card => `
-                    <div class="p-5 rounded-lg border ${card.class} flex flex-col justify-between min-h-[120px]">
-                        <p class="text-base font-semibold">${card.label}</p>
-                        <p class="text-3xl font-bold mt-2 text-right">${card.value}</p>
+                    <div class="p-4 rounded-xl ${card.bg} ${card.border}">
+                        <p class="text-sm font-semibold text-gray-600">${card.label}</p>
+                        <p class="text-3xl font-bold mt-1 ${card.text}">${card.value}</p>
                     </div>
                 `).join('');
             }
@@ -674,31 +623,20 @@
 
             function createSettingsInput(setting) {
                 const wrapper = document.createElement('div');
+                wrapper.className = "flex items-center justify-between";
                 const label = document.createElement('label');
                 label.htmlFor = setting.key;
-                label.className = "block text-sm font-medium text-white";
+                label.className = "block text-sm font-medium text-gray-700";
                 label.textContent = setting.label;
                 
-                const inputWrapper = document.createElement('div');
-                inputWrapper.className = 'relative mt-1 rounded-md shadow-sm';
-
-                if (setting.isCurrency) {
-                    const prefix = document.createElement('div');
-                    prefix.className = 'pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3';
-                    prefix.innerHTML = '<span class="text-gray-400 sm:text-sm">£</span>';
-                    inputWrapper.appendChild(prefix);
-                }
-
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.id = setting.key;
                 input.value = state[setting.key];
-                input.className = 'block w-full rounded-md sm:text-sm bg-gray-700 border-gray-600 text-white focus:border-indigo-500 focus:ring-indigo-500';
-                if(setting.isCurrency) input.classList.add('pl-7');
-
-                inputWrapper.appendChild(input);
+                input.className = 'settings-input w-28 text-right';
+                
                 wrapper.appendChild(label);
-                wrapper.appendChild(inputWrapper);
+                wrapper.appendChild(input);
 
                 input.addEventListener('input', (e) => {
                     updateStateFromUI();
@@ -709,6 +647,12 @@
             }
 
             function initializeSettings() {
+                // Clear existing
+                dom.settingsECallOff.innerHTML = '<p class="font-bold text-gray-800">Current Programme (Leakage)</p>';
+                dom.settingsECallOn.innerHTML = '<p class="font-bold text-gray-800">Axitech Programme (Uplift)</p>';
+                dom.settingsACallOff.innerHTML = '<p class="font-bold text-gray-800">Current Programme (Leakage)</p>';
+                dom.settingsACallOn.innerHTML = '<p class="font-bold text-gray-800">Axitech Programme (Uplift)</p>';
+                
                 for (const containerId in settingsMap) {
                     const container = document.getElementById(containerId);
                     if (settingsMap.hasOwnProperty(containerId)) {
@@ -721,34 +665,27 @@
             }
 
             function calculateAndRender() {
-                // Calculate all scenarios
                 const eCallOffData = calculateECallOff();
                 const eCallOnData = calculateECallOn();
                 const aCallOffData = calculateACallOff();
                 const aCallOnData = calculateACallOn();
 
-                // Render Overview
                 renderOverview(eCallOffData, eCallOnData, aCallOffData, aCallOnData);
 
-                // Render eCall section
                 const eCallData = state.eCallOn ? eCallOnData : eCallOffData;
                 renderResults(dom.eCallResults, dom.eCallBreakdown, eCallData, dom.eCallStatus);
                 
-                // Render aCall section
                 const aCallData = state.aCallOn ? aCallOnData : aCallOffData;
                 renderResults(dom.aCallResults, dom.aCallBreakdown, aCallData, dom.aCallStatus);
             }
 
-            // --- STATE & UI SYNC ---
             function updateStateFromUI() {
                 state.totalConnectedCarParc = parseFloat(dom.totalConnectedCarParc.value) || 0;
                 state.annualCrashRate = parseFloat(dom.annualCrashRate.value) || 0;
                 state.avgRepairInvoice = parseFloat(dom.avgRepairInvoice.value) || 0;
                 state.avgNewVehicleRevenue = parseFloat(dom.avgNewVehicleRevenue.value) || 0;
-                state.eCallOn = dom.eCallToggle.checked;
-                state.aCallOn = dom.aCallToggle.checked;
                 
-                 for (const containerId in settingsMap) {
+                for (const containerId in settingsMap) {
                     if (settingsMap.hasOwnProperty(containerId)) {
                         settingsMap[containerId].forEach(setting => {
                             const inputElement = document.getElementById(setting.key);
@@ -760,9 +697,7 @@
                 }
             }
             
-            // --- EVENT LISTENERS ---
             function setupEventListeners() {
-                // Sliders
                 const sliders = [
                     { el: dom.totalConnectedCarParc, valEl: dom.totalConnectedCarParcValue, format: (val) => parseInt(val).toLocaleString('en-GB') },
                     { el: dom.annualCrashRate, valEl: dom.annualCrashRateValue, format: (val) => `${val}%` },
@@ -771,6 +706,7 @@
                 ];
 
                 sliders.forEach(({ el, valEl, format }) => {
+                    valEl.textContent = format(el.value); // Set initial value
                     el.addEventListener('input', () => {
                         valEl.textContent = format(el.value);
                         updateStateFromUI();
@@ -778,35 +714,50 @@
                     });
                 });
 
-                // Toggles
-                [dom.eCallToggle, dom.aCallToggle].forEach(el => {
-                    el.addEventListener('change', () => {
-                        updateStateFromUI();
-                        calculateAndRender();
+                function handleToggle(container, stateKey) {
+                    container.addEventListener('click', (e) => {
+                        if (e.target.tagName === 'BUTTON') {
+                            const value = e.target.dataset.value === 'true';
+                            state[stateKey] = value;
+                            container.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                            e.target.classList.add('active');
+                            calculateAndRender();
+                        }
                     });
-                });
+                }
+                handleToggle(dom.eCallToggleContainer, 'eCallOn');
+                handleToggle(dom.aCallToggleContainer, 'aCallOn');
                 
-                // Tabs
                 dom.tabCalculator.addEventListener('click', () => {
                     dom.viewCalculator.classList.remove('hidden');
                     dom.viewSettings.classList.add('hidden');
-                    dom.tabCalculator.classList.add('text-white', 'border-white');
-                    dom.tabCalculator.classList.remove('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500', 'border-transparent');
-                    dom.tabSettings.classList.add('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500', 'border-transparent');
-                    dom.tabSettings.classList.remove('text-white', 'border-white');
+                    dom.tabCalculator.classList.add('bg-blue-100', 'text-blue-700');
+                    dom.tabCalculator.classList.remove('text-gray-600');
+                    dom.tabSettings.classList.add('text-gray-600');
+                    dom.tabSettings.classList.remove('bg-blue-100', 'text-blue-700');
                 });
 
                 dom.tabSettings.addEventListener('click', () => {
                     dom.viewCalculator.classList.add('hidden');
                     dom.viewSettings.classList.remove('hidden');
-                    dom.tabSettings.classList.add('text-white', 'border-white');
-                    dom.tabSettings.classList.remove('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500', 'border-transparent');
-                    dom.tabCalculator.classList.add('text-gray-400', 'hover:text-gray-200', 'hover:border-gray-500', 'border-transparent');
-                    dom.tabCalculator.classList.remove('text-white', 'border-white');
+                    dom.tabSettings.classList.add('bg-blue-100', 'text-blue-700');
+                    dom.tabSettings.classList.remove('text-gray-600');
+                    dom.tabCalculator.classList.add('text-gray-600');
+                    dom.tabCalculator.classList.remove('bg-blue-100', 'text-blue-700');
+                });
+                
+                dom.collapsibleTriggers.forEach(trigger => {
+                    const contentId = trigger.dataset.collapsibleTrigger;
+                    const content = document.getElementById(contentId);
+                    const icon = trigger.querySelector('[data-collapsible-icon]');
+
+                    trigger.addEventListener('click', () => {
+                        const isHidden = content.classList.toggle('hidden');
+                        icon.classList.toggle('rotate-180', !isHidden);
+                    });
                 });
             }
 
-            // --- INITIALIZATION ---
             function init() {
                 initializeSettings();
                 setupEventListeners();
