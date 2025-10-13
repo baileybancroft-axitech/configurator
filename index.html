@@ -85,6 +85,21 @@
             box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
         }
 
+        .reset-button {
+             background: none;
+             border: none;
+             color: #6B7280;
+             font-size: 0.875rem;
+             font-weight: 600;
+             cursor: pointer;
+             display: flex;
+             align-items: center;
+             gap: 0.25rem;
+        }
+        .reset-button:hover {
+            color: #111827;
+        }
+
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -105,63 +120,63 @@
                 <div class="panel p-6">
                     <div class="flex items-center justify-between mb-6">
                          <h2 class="text-xl font-bold section-title">Global Inputs</h2>
-                         <div>
-                            <button id="tab-calculator" class="px-3 py-1 text-sm font-semibold rounded-md bg-blue-100 text-blue-700">Calculator</button>
-                            <button id="tab-settings" class="px-3 py-1 text-sm font-semibold rounded-md text-gray-600">Settings</button>
-                         </div>
+                         <button id="resetButton" class="reset-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M4 4l1.5 1.5A9 9 0 0120.5 16l-1.5 1.5M20 20l-1.5-1.5A9 9 0 003.5 8l1.5-1.5" />
+                            </svg>
+                            Reset
+                         </button>
                     </div>
 
                     <div id="view-calculator" class="space-y-6">
-                        <div>
-                            <label for="totalConnectedCarParc" class="block text-sm font-bold text-gray-700">Total Connected Car Parc</label>
-                            <input type="range" id="totalConnectedCarParc" min="500000" max="4000000" value="2100000" step="100000" class="mt-2 block w-full slider">
-                            <span id="totalConnectedCarParcValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">2,100,000</span>
-                        </div>
-                        <div>
-                            <label for="annualCrashRate" class="block text-sm font-bold text-gray-700">Annual Crash Rate (%)</label>
-                            <input type="range" id="annualCrashRate" min="1" max="20" value="7" class="mt-2 block w-full slider">
-                            <span id="annualCrashRateValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">7%</span>
-                        </div>
-                        <div>
-                            <label for="avgRepairInvoice" class="block text-sm font-bold text-gray-700">Avg. Repair Invoice</label>
-                            <input type="range" id="avgRepairInvoice" min="1000" max="10000" value="2500" step="100" class="mt-2 block w-full slider">
-                            <span id="avgRepairInvoiceValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£2,500</span>
-                        </div>
-                        <div>
-                            <label for="avgNewVehicleRevenue" class="block text-sm font-bold text-gray-700">Avg. New Vehicle Sale Revenue</label>
-                            <input type="range" id="avgNewVehicleRevenue" min="5000" max="50000" value="30000" step="100" class="mt-2 block w-full slider">
-                            <span id="avgNewVehicleRevenueValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£30,000</span>
-                        </div>
-                         <div class="pt-4 border-t border-gray-200">
-                             <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control eCall (ACN)</label>
-                             <div class="segmented-control" id="eCallToggleContainer">
-                                <button data-value="false" class="active">Off</button>
-                                <button data-value="true">On</button>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+                             <div>
+                                <label for="totalConnectedCarParc" class="block text-sm font-bold text-gray-700">Total Connected Car Parc</label>
+                                <input type="range" id="totalConnectedCarParc" min="500000" max="4000000" value="2100000" step="100000" class="mt-2 block w-full slider">
+                                <span id="totalConnectedCarParcValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">2,100,000</span>
+                            </div>
+                            <div>
+                                <label for="annualCrashRate" class="block text-sm font-bold text-gray-700">Annual Crash Rate (%)</label>
+                                <input type="range" id="annualCrashRate" min="1" max="20" value="7" class="mt-2 block w-full slider">
+                                <span id="annualCrashRateValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">7%</span>
+                            </div>
+                            <div>
+                                <label for="avgRepairInvoice" class="block text-sm font-bold text-gray-700">Avg. Repair Invoice</label>
+                                <input type="range" id="avgRepairInvoice" min="1000" max="10000" value="2500" step="100" class="mt-2 block w-full slider">
+                                <span id="avgRepairInvoiceValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£2,500</span>
+                            </div>
+                            <div>
+                                <label for="avgNewVehicleRevenue" class="block text-sm font-bold text-gray-700">Avg. New Vehicle Sale Revenue</label>
+                                <input type="range" id="avgNewVehicleRevenue" min="5000" max="200000" value="30000" step="100" class="mt-2 block w-full slider">
+                                <span id="avgNewVehicleRevenueValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£30,000</span>
+                            </div>
+                            <div>
+                                <label for="aCallOnTcsAccept" class="block text-sm font-bold text-gray-700">aCall ON Pre-consent (%)</label>
+                                <input type="range" id="aCallOnTcsAccept" min="0" max="100" value="92" step="1" class="mt-2 block w-full slider">
+                                <span id="aCallOnTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">92%</span>
+                            </div>
+                             <div>
+                                <label for="aCallOffTcsAccept" class="block text-sm font-bold text-gray-700">aCall OFF T&Cs Accept (%)</label>
+                                <input type="range" id="aCallOffTcsAccept" min="0" max="100" value="20" step="1" class="mt-2 block w-full slider">
+                                <span id="aCallOffTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">20%</span>
                             </div>
                         </div>
-                        <div>
-                             <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control aCall</label>
-                             <div class="segmented-control" id="aCallToggleContainer">
-                                <button data-value="false" class="active">Off</button>
-                                <button data-value="true">On</button>
+
+                         <div class="pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+                             <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control eCall (ACN)</label>
+                                <div class="segmented-control" id="eCallToggleContainer">
+                                    <button data-value="false" class="active">Off</button>
+                                    <button data-value="true">On</button>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div id="view-settings" class="hidden space-y-6">
-                        <div>
-                            <h3 class="text-md font-bold text-gray-800 mb-2">eCall Constants</h3>
-                            <div class="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                <div id="settings-eCall-off" class="space-y-3"></div>
-                                <div id="settings-eCall-on" class="space-y-3 pt-3 border-t border-gray-200"></div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control aCall</label>
+                                <div class="segmented-control" id="aCallToggleContainer">
+                                    <button data-value="false" class="active">Off</button>
+                                    <button data-value="true">On</button>
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                             <h3 class="text-md font-bold text-gray-800 mb-2">aCall Constants</h3>
-                             <div class="space-y-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                <div id="settings-aCall-off" class="space-y-3"></div>
-                                <div id="settings-aCall-on" class="space-y-3 pt-3 border-t border-gray-200"></div>
-                             </div>
                         </div>
                     </div>
                 </div>
@@ -185,8 +200,8 @@
                         </div>
                     </button>
                     <div id="eCallContent" class="px-6 pb-6 space-y-6">
-                        <div id="eCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-                        <div id="eCallBreakdown" class="pt-6 border-t border-gray-200"></div>
+                        <div id="eCallBreakdown"></div>
+                        <div id="eCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
                     </div>
                 </section>
 
@@ -201,8 +216,8 @@
                         </div>
                     </button>
                     <div id="aCallContent" class="px-6 pb-6 space-y-6">
-                        <div id="aCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
-                        <div id="aCallBreakdown" class="pt-6 border-t border-gray-200"></div>
+                         <div id="aCallBreakdown"></div>
+                        <div id="aCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
                     </div>
                 </section>
             </div>
@@ -212,13 +227,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            // --- STATE MANAGEMENT ---
-            const state = {
+             const defaultState = {
                 totalConnectedCarParc: 2100000,
                 annualCrashRate: 7,
                 avgRepairInvoice: 2500,
                 avgNewVehicleRevenue: 30000,
+                aCall_on_tcsAcceptanceRate: 92,
+                aCall_off_tcsAcceptanceRate: 20,
+            };
+
+            // --- STATE MANAGEMENT ---
+            const state = {
+                ...defaultState,
                 eCallOn: false,
                 aCallOn: false,
                 activeTab: 'calculator',
@@ -244,17 +264,15 @@
                 eCall_on_totalLossRepurchaseOppRate: 65,
                 eCall_on_nonFaultFee: 500,
                 aCall_off_detectionRate: 50,
-                aCall_off_tcsAcceptanceRate: 20,
                 aCall_off_engagementRate: 10,
                 aCall_off_totalLossRate: 6.9,
                 aCall_off_nonFaultRate: 44,
                 aCall_off_faultRate: 56,
                 aCall_off_inverseCaptivePartsRate: 82,
-                aCall_off_totalLossRateForRepurchase: 6.9,
+                aCall_off_totalLossRepurchaseOppRate: 70,
                 aCall_off_nonFaultRateForRevenue: 44,
                 aCall_off_nonFaultFee: 500,
                 aCall_on_detectionRate: 50,
-                aCall_on_tcsAcceptanceRate: 92,
                 aCall_on_engagementRate: 70,
                 aCall_on_totalLossRate: 6.9,
                 aCall_on_nonFaultRate: 44,
@@ -267,10 +285,7 @@
 
             // --- DOM ELEMENTS ---
             const dom = {
-                tabCalculator: document.getElementById('tab-calculator'),
-                tabSettings: document.getElementById('tab-settings'),
-                viewCalculator: document.getElementById('view-calculator'),
-                viewSettings: document.getElementById('view-settings'),
+                resetButton: document.getElementById('resetButton'),
                 totalConnectedCarParc: document.getElementById('totalConnectedCarParc'),
                 totalConnectedCarParcValue: document.getElementById('totalConnectedCarParcValue'),
                 annualCrashRate: document.getElementById('annualCrashRate'),
@@ -279,6 +294,10 @@
                 avgRepairInvoiceValue: document.getElementById('avgRepairInvoiceValue'),
                 avgNewVehicleRevenue: document.getElementById('avgNewVehicleRevenue'),
                 avgNewVehicleRevenueValue: document.getElementById('avgNewVehicleRevenueValue'),
+                aCallOnTcsAccept: document.getElementById('aCallOnTcsAccept'),
+                aCallOnTcsAcceptValue: document.getElementById('aCallOnTcsAcceptValue'),
+                aCallOffTcsAccept: document.getElementById('aCallOffTcsAccept'),
+                aCallOffTcsAcceptValue: document.getElementById('aCallOffTcsAcceptValue'),
                 eCallToggleContainer: document.getElementById('eCallToggleContainer'),
                 aCallToggleContainer: document.getElementById('aCallToggleContainer'),
                 eCallResults: document.getElementById('eCallResults'),
@@ -288,63 +307,9 @@
                 aCallBreakdown: document.getElementById('aCallBreakdown'),
                 aCallStatus: document.getElementById('aCallStatus'),
                 combinedResults: document.getElementById('combinedResults'),
-                settingsECallOff: document.getElementById('settings-eCall-off'),
-                settingsECallOn: document.getElementById('settings-eCall-on'),
-                settingsACallOff: document.getElementById('settings-aCall-off'),
-                settingsACallOn: document.getElementById('settings-aCall-on'),
                 collapsibleTriggers: document.querySelectorAll('[data-collapsible-trigger]'),
             };
             
-            // --- SETTINGS MAPPING ---
-            const settingsMap = {
-                'settings-eCall-off': [
-                    { key: 'eCall_off_tcsAcceptanceRate', label: 'T&Cs Acceptance Rate (%)' },
-                    { key: 'eCall_off_acnDetectionRate', label: 'ACN Detection Rate (%)' },
-                    { key: 'eCall_off_emergencyAcnSplit', label: 'Emergency ACN Split (%)' },
-                    { key: 'eCall_off_nonEmergencyAcnSplit', label: 'Non-Emergency ACN Split (%)' },
-                    { key: 'eCall_off_totalLossRate', label: 'Total Loss Rate (%)' },
-                    { key: 'eCall_off_inverseCaptivePartsRate', label: 'Inverse Captive Parts Rate (%)' },
-                    { key: 'eCall_off_totalLossRepurchaseOppRate', label: 'Total Loss Repurchase Rate (%)' },
-                    { key: 'eCall_off_nonFaultFee', label: 'Non-Fault Programme Fee (£)', isCurrency: true },
-                ],
-                'settings-eCall-on': [
-                    { key: 'eCall_on_tcsAcceptanceRate', label: 'T&Cs Acceptance Rate (%)' },
-                    { key: 'eCall_on_acnDetectionRate', label: 'ACN Detection Rate (%)' },
-                    { key: 'eCall_on_emergencyAcnSplit', label: 'Emergency ACN Split (%)' },
-                    { key: 'eCall_on_nonEmergencyAcnSplit', label: 'Non-Emergency ACN Split (%)' },
-                    { key: 'eCall_on_totalLossRate', label: 'Total Loss Rate (%)' },
-                    { key: 'eCall_on_emergencyConversion', label: 'Emergency ACN Event Conversion (%)' },
-                    { key: 'eCall_on_nonFaultRate', label: 'Non-Fault Rate (%)' },
-                    { key: 'eCall_on_faultRate', label: 'Fault Rate (%)' },
-                    { key: 'eCall_on_nonFaultConversion', label: 'Non-Fault Conversion (%)' },
-                    { key: 'eCall_on_faultConversion', label: 'Fault Conversion (%)' },
-                    { key: 'eCall_on_totalLossRepurchaseOppRate', label: 'Total Loss Repurchase Rate (%)' },
-                    { key: 'eCall_on_nonFaultFee', label: 'Non-Fault Programme Fee (£)', isCurrency: true },
-                ],
-                'settings-aCall-off': [
-                    { key: 'aCall_off_detectionRate', label: 'aCall Detection Rate (%)' },
-                    { key: 'aCall_off_tcsAcceptanceRate', label: 'T&Cs Acceptance Rate (%)' },
-                    { key: 'aCall_off_engagementRate', label: 'Programme Engagement Rate (%)' },
-                    { key: 'aCall_off_totalLossRate', label: 'Total Loss Rate (%)' },
-                    { key: 'aCall_off_nonFaultRate', label: 'Non-Fault Rate (%)' },
-                    { key: 'aCall_off_faultRate', label: 'Fault Rate (%)' },
-                    { key: 'aCall_off_inverseCaptivePartsRate', label: 'Inverse Captive Parts Rate (%)' },
-                    { key: 'aCall_off_nonFaultFee', label: 'Non-Fault Programme Fee (£)', isCurrency: true },
-                ],
-                'settings-aCall-on': [
-                    { key: 'aCall_on_detectionRate', label: 'aCall Detection Rate (%)' },
-                    { key: 'aCall_on_tcsAcceptanceRate', label: 'T&Cs Acceptance Rate (Pre-Consented) (%)' },
-                    { key: 'aCall_on_engagementRate', label: 'Programme Engagement Rate (%)' },
-                    { key: 'aCall_on_totalLossRate', label: 'Total Loss Rate (%)' },
-                    { key: 'aCall_on_nonFaultRate', label: 'Non-Fault Rate (%)' },
-                    { key: 'aCall_on_faultRate', label: 'Fault Rate (%)' },
-                    { key: 'aCall_on_nonFaultConversion', label: 'Non-Fault Conversion (%)' },
-                    { key: 'aCall_on_faultConversion', label: 'Fault Conversion (%)' },
-                    { key: 'aCall_on_totalLossRepurchaseOppRate', label: 'Total Loss Repurchase Rate (%)' },
-                    { key: 'aCall_on_nonFaultFee', label: 'Non-Fault Programme Fee (£)', isCurrency: true },
-                ]
-            };
-
 
             // --- UTILITY FUNCTIONS ---
             const formatNumber = (num) => Math.round(num).toLocaleString('en-GB');
@@ -356,31 +321,29 @@
             function calculateECallOff() {
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detectedAccidents = totalAccidents * p('eCall_off_acnDetectionRate');
-                
-                const captiveRepairs = detectedAccidents * (1 - p('eCall_off_inverseCaptivePartsRate'));
-                const captiveRate = 100 - state.eCall_off_inverseCaptivePartsRate;
+                const tcsLost = detectedAccidents * (1 - p('eCall_off_tcsAcceptanceRate'));
+                const afterTcs = detectedAccidents - tcsLost;
 
-                const totalNoTotalLoss = detectedAccidents * p('eCall_off_totalLossRate');
-                const totalRepairableEvents = detectedAccidents - totalNoTotalLoss;
+                const totalNoTotalLoss = afterTcs * p('eCall_off_totalLossRate');
+                const totalRepairableEvents = afterTcs - totalNoTotalLoss;
                 
-                const totalRepairsLeaked = totalRepairableEvents - captiveRepairs;
-
-                const totalLeakedRepairable = totalRepairsLeaked;
-                const nonEmergencyRatio = state.eCall_off_nonEmergencyAcnSplit / (state.eCall_off_nonEmergencyAcnSplit + state.eCall_off_emergencyAcnSplit);
-                
-                const nonEmergencyLost = totalLeakedRepairable * nonEmergencyRatio;
-                const emergencyLost = totalLeakedRepairable * (1 - nonEmergencyRatio);
-
-                const opportunities = totalRepairableEvents;
-                const deployments = totalRepairsLeaked;
+                const deployments = totalRepairableEvents * p('eCall_off_inverseCaptivePartsRate');
                 const repurchases = totalNoTotalLoss * p('eCall_off_totalLossRepurchaseOppRate');
                 const revenue = (deployments * state.avgRepairInvoice) + ((deployments * p('eCall_off_nonFaultRateForRevenue')) * state.eCall_off_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
                 
+                // Funnel specific
+                const captiveRepairs = totalRepairableEvents * (1 - p('eCall_off_inverseCaptivePartsRate'));
+                const captiveRate = 100 - state.eCall_off_inverseCaptivePartsRate;
+                const totalRepairsLeaked = totalRepairableEvents - captiveRepairs;
+                const nonEmergencyRatio = state.eCall_off_nonEmergencyAcnSplit / (state.eCall_off_nonEmergencyAcnSplit + state.eCall_off_emergencyAcnSplit);
+                const nonEmergencyLost = totalRepairsLeaked * nonEmergencyRatio;
+                const emergencyLost = totalRepairsLeaked * (1 - nonEmergencyRatio);
+
                 return {
-                    raw: { opportunities, deployments, repurchases, revenue },
+                    raw: { opportunities: totalRepairableEvents, deployments, repurchases, revenue },
                     cardClass: 'leakage',
                     cards: [
-                        { label: 'Total Leaked Repair Opportunities', value: formatNumber(opportunities) },
+                        { label: 'Total Leaked Repair Opportunities', value: formatNumber(totalRepairableEvents) },
                         { label: 'Total Leaked Repair Deployments', value: formatNumber(deployments) },
                         { label: 'Total Leaked Total Loss Repurchases', value: formatNumber(repurchases) },
                         { label: 'Total Parts Revenue Leakage (£)', value: formatCurrency(revenue) },
@@ -391,6 +354,7 @@
                         steps: [
                             { type: 'start', value: totalAccidents, label: 'Total Annual Accidents', desc: 'The total number of connected vehicles multiplied by the annual crash rate.' },
                             { type: 'info', value: detectedAccidents, label: `Total Accidents Detected (${state.eCall_off_acnDetectionRate}%)`, desc: 'The total number of annual crashes that trigger eCall and Airbag deployment.'},
+                            { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${100 - state.eCall_off_tcsAcceptanceRate}%)`, desc: 'Lost due to drivers not accepting T&Cs.' },
                             { type: 'leakage', value: nonEmergencyLost, label: `Non-Emergency Events (${state.eCall_off_nonEmergencyAcnSplit}%)`, desc: 'Lost due to no Accident Support warm transfer or intervention.' },
                             { type: 'leakage', value: emergencyLost, label: `Emergency Events (${state.eCall_off_emergencyAcnSplit}%)`, desc: 'Lost due to lack of contextual, sensitive follow-up with driver.' },
                             { type: 'uplift', value: captiveRepairs, label: `Captive Parts (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
@@ -403,8 +367,13 @@
             function calculateECallOn() {
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detectedAccidents = totalAccidents * p('eCall_on_acnDetectionRate');
-                const totalEmergency = detectedAccidents * p('eCall_on_emergencyAcnSplit');
-                const totalNonEmergency = detectedAccidents * p('eCall_on_nonEmergencyAcnSplit');
+                const tcsLost = detectedAccidents * (1 - p('eCall_on_tcsAcceptanceRate'));
+                const afterTcs = detectedAccidents - tcsLost;
+                
+                const totalNoTotalLoss = afterTcs * p('eCall_on_totalLossRate');
+                
+                const totalEmergency = afterTcs * p('eCall_on_emergencyAcnSplit');
+                const totalNonEmergency = afterTcs * p('eCall_on_nonEmergencyAcnSplit');
                 
                 const emergencyCaptured = totalEmergency * p('eCall_on_emergencyConversion');
                 const nonEmergencyCaptured = totalNonEmergency;
@@ -414,7 +383,6 @@
                 const captiveRate = 100 - state.eCall_off_inverseCaptivePartsRate;
 
                 const totalAddressableRepairable = nonEmergencyCaptured + emergencyCaptured;
-                const totalNoTotalLoss = detectedAccidents * p('eCall_on_totalLossRate');
                 const opportunities = totalAddressableRepairable - totalNoTotalLoss;
 
                 const nonFaultEvents = opportunities * p('eCall_on_nonFaultRate');
@@ -424,7 +392,6 @@
                 const axitechDeployments = nonFaultConverted + faultConverted;
                 
                 const deployments = axitechDeployments + captiveFromUncaptured;
-
                 const repurchases = totalNoTotalLoss * p('eCall_on_totalLossRepurchaseOppRate');
                 const revenue = (deployments * state.avgRepairInvoice) + (nonFaultConverted * state.eCall_on_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
 
@@ -443,6 +410,7 @@
                         steps: [
                             { type: 'start', value: totalAccidents, label: 'Total Annual Accidents', desc: 'The total number of connected vehicles multiplied by the annual crash rate.' },
                             { type: 'info', value: detectedAccidents, label: `Total Accidents Detected (${state.eCall_on_acnDetectionRate}%)`, desc: 'The total number of annual crashes that trigger eCall and Airbag deployment.'},
+                            { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${100 - state.eCall_on_tcsAcceptanceRate}%)`, desc: 'Lost due to drivers not accepting T&Cs.' },
                             { type: 'uplift', value: nonEmergencyCaptured, label: `Non-Emergency Events (${state.eCall_on_nonEmergencyAcnSplit}%)`, desc: 'Gained due to transfer or engagement with Accident Support team.'},
                             { type: 'uplift', value: emergencyCaptured, label: `Emergency Events (${state.eCall_on_emergencyAcnSplit}%)`, desc: 'Gained due to accident support team providing contextual and sensitive follow-up to affected drivers.' },
                             { type: 'uplift', value: captiveFromUncaptured, label: `Captive Parts from Remainder (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
@@ -456,33 +424,40 @@
                 const totalAccidents = state.totalConnectedCarParc * p('annualCrashRate');
                 const detected = totalAccidents * p('aCall_off_detectionRate');
 
-                // Funnel display values
+                // --- Start of Chained Calculation for funnel and final numbers ---
                 const afterTcs = detected * p('aCall_off_tcsAcceptanceRate');
-                const tcsLost = detected - afterTcs;
                 const engaged = afterTcs * p('aCall_off_engagementRate');
-                const engagementLost = afterTcs - engaged;
-                const faultEventsLost = engaged * (1 - p('aCall_off_totalLossRate')) * p('aCall_off_faultRate');
+                const repairableInEngaged = engaged * (1 - p('aCall_off_totalLossRate'));
+                const nonFaultInEngaged = repairableInEngaged * p('aCall_off_nonFaultRate');
+                const captiveRepairs = nonFaultInEngaged * (1 - p('aCall_off_inverseCaptivePartsRate'));
+                // --- End of Chained Calculation ---
 
-                // Core calculations based on new captive parts logic
-                const captiveRepairs = detected * (1 - p('aCall_off_inverseCaptivePartsRate'));
-                const captiveRate = 100 - state.aCall_off_inverseCaptivePartsRate;
                 const totalRepairable = detected * (1 - p('aCall_off_totalLossRate'));
                 const totalRepairsLeaked = totalRepairable - captiveRepairs;
 
                 // Card values
-                const leakedOpportunities = totalRepairable;
-                const leakedDeployments = totalRepairsLeaked;
-                const leakedRepurchases = leakedDeployments * p('aCall_off_totalLossRate'); // Corrected calculation based on leaked deployments
-                const leakedRevenue = (leakedDeployments * state.avgRepairInvoice) + ((leakedDeployments * p('aCall_off_nonFaultRateForRevenue')) * state.aCall_off_nonFaultFee) + (leakedRepurchases * state.avgNewVehicleRevenue);
+                const opportunities = totalRepairable;
+                const deployments = totalRepairsLeaked;
+                const totalNoTotalLoss = detected * p('aCall_off_totalLossRate');
+                const repurchases = totalNoTotalLoss * p('aCall_off_totalLossRepurchaseOppRate');
+                const revenue = (deployments * state.avgRepairInvoice) + ((deployments * p('aCall_off_nonFaultRateForRevenue')) * state.aCall_off_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
+
+
+                // Funnel display values
+                const tcsLost = detected - afterTcs;
+                const engagementLost = afterTcs - engaged;
+                const faultEventsLostInEngaged = repairableInEngaged * p('aCall_off_faultRate'); // Fault events from the remainder are lost
+                const captiveRate = 100 - state.aCall_off_inverseCaptivePartsRate;
+                
 
                 return {
-                    raw: { opportunities: leakedOpportunities, deployments: leakedDeployments, repurchases: leakedRepurchases, revenue: leakedRevenue },
+                    raw: { opportunities, deployments, repurchases, revenue },
                     cardClass: 'leakage',
                     cards: [
-                        { label: 'Total Leaked Repair Opportunities', value: formatNumber(leakedOpportunities) },
-                        { label: 'Total Leaked Repair Deployments', value: formatNumber(leakedDeployments) },
-                        { label: 'Total Leaked Total Loss Repurchases', value: formatNumber(leakedRepurchases) },
-                        { label: 'Total Parts Revenue Leakage (£)', value: formatCurrency(leakedRevenue) },
+                        { label: 'Total Leaked Repair Opportunities', value: formatNumber(opportunities) },
+                        { label: 'Total Leaked Repair Deployments', value: formatNumber(deployments) },
+                        { label: 'Total Leaked Total Loss Repurchases', value: formatNumber(repurchases) },
+                        { label: 'Total Parts Revenue Leakage (£)', value: formatCurrency(revenue) },
                     ],
                     funnelTitle: 'Leakage Funnel',
                     funnel: {
@@ -490,9 +465,9 @@
                         steps: [
                             { type: 'start', value: totalAccidents, label: 'Total Annual Accidents', desc: 'The total number of connected vehicles multiplied by the annual crash rate.' },
                             { type: 'info', value: detected, label: `Total Accidents Detected (${state.aCall_off_detectionRate}%)`, desc: 'The total number of annual crashes that trigger aCall detection.'},
-                            { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${100 - state.aCall_off_tcsAcceptanceRate}%)`, desc: 'The total number of BMW drivers that have not opted-in to aCall proactive engagement from BMW Accident Support, or rejected this option.'},
+                            { type: 'leakage', value: tcsLost, label: `Lost to T&Cs (${(100 - state.aCall_off_tcsAcceptanceRate).toFixed(0)}%)`, desc: 'The total number of BMW drivers that have not opted-in to aCall proactive engagement from BMW Accident Support, or rejected this option.'},
                             { type: 'leakage', value: engagementLost, label: `Lost to Non-Engagement (${100 - state.aCall_off_engagementRate}% of T&C Accepts)`, desc: 'The number of drivers who reject the aCall service offering when it appears in the BMW dashboard after a collision.' },
-                            { type: 'leakage', value: faultEventsLost, label: `Fault Events Lost (${state.aCall_off_faultRate}%)`, desc: 'The total number of fault events from the remainder that are leaked through the lack of a fault handling programme.' },
+                            { type: 'leakage', value: faultEventsLostInEngaged, label: `Fault Events Lost (${state.aCall_off_faultRate}%)`, desc: 'The total number of fault events from the remainder that are leaked through the lack of a fault handling programme.' },
                             { type: 'uplift', value: captiveRepairs, label: `Captive Parts (${captiveRate.toFixed(0)}%)`, desc: 'The percentage of repair opportunities that use captive parts partially during their repair, or manually opt for a BMW certified repair.' },
                             { type: 'end', value: totalRepairsLeaked, label: 'Total Repairs Leaked', desc: 'The total number of repair opportunities lost from the BMW approved network.' }
                         ]
@@ -514,7 +489,7 @@
                 const faultConverted = fault * p('aCall_on_faultConversion');
                 const deployments = nonFaultConverted + faultConverted;
 
-                const totalNoTotalLoss = engaged * p('aCall_on_totalLossRate');
+                const totalNoTotalLoss = detected * p('aCall_on_totalLossRate');
                 const repurchases = totalNoTotalLoss * p('aCall_on_totalLossRepurchaseOppRate');
                 const revenue = (deployments * state.avgRepairInvoice) + (nonFaultConverted * state.aCall_on_nonFaultFee) + (repurchases * state.avgNewVehicleRevenue);
 
@@ -620,50 +595,6 @@
                 `).join('');
             }
 
-
-            function createSettingsInput(setting) {
-                const wrapper = document.createElement('div');
-                wrapper.className = "flex items-center justify-between";
-                const label = document.createElement('label');
-                label.htmlFor = setting.key;
-                label.className = "block text-sm font-medium text-gray-700";
-                label.textContent = setting.label;
-                
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.id = setting.key;
-                input.value = state[setting.key];
-                input.className = 'settings-input w-28 text-right';
-                
-                wrapper.appendChild(label);
-                wrapper.appendChild(input);
-
-                input.addEventListener('input', (e) => {
-                    updateStateFromUI();
-                    calculateAndRender();
-                });
-
-                return wrapper;
-            }
-
-            function initializeSettings() {
-                // Clear existing
-                dom.settingsECallOff.innerHTML = '<p class="font-bold text-gray-800">Current Programme (Leakage)</p>';
-                dom.settingsECallOn.innerHTML = '<p class="font-bold text-gray-800">Axitech Programme (Uplift)</p>';
-                dom.settingsACallOff.innerHTML = '<p class="font-bold text-gray-800">Current Programme (Leakage)</p>';
-                dom.settingsACallOn.innerHTML = '<p class="font-bold text-gray-800">Axitech Programme (Uplift)</p>';
-                
-                for (const containerId in settingsMap) {
-                    const container = document.getElementById(containerId);
-                    if (settingsMap.hasOwnProperty(containerId)) {
-                        settingsMap[containerId].forEach(setting => {
-                            const inputElement = createSettingsInput(setting);
-                            container.appendChild(inputElement);
-                        });
-                    }
-                }
-            }
-
             function calculateAndRender() {
                 const eCallOffData = calculateECallOff();
                 const eCallOnData = calculateECallOn();
@@ -684,17 +615,8 @@
                 state.annualCrashRate = parseFloat(dom.annualCrashRate.value) || 0;
                 state.avgRepairInvoice = parseFloat(dom.avgRepairInvoice.value) || 0;
                 state.avgNewVehicleRevenue = parseFloat(dom.avgNewVehicleRevenue.value) || 0;
-                
-                for (const containerId in settingsMap) {
-                    if (settingsMap.hasOwnProperty(containerId)) {
-                        settingsMap[containerId].forEach(setting => {
-                            const inputElement = document.getElementById(setting.key);
-                            if (inputElement) {
-                                 state[setting.key] = parseFloat(inputElement.value) || 0;
-                            }
-                        });
-                    }
-                }
+                state.aCall_on_tcsAcceptanceRate = parseFloat(dom.aCallOnTcsAccept.value) || 0;
+                state.aCall_off_tcsAcceptanceRate = parseFloat(dom.aCallOffTcsAccept.value) || 0;
             }
             
             function setupEventListeners() {
@@ -703,63 +625,80 @@
                     { el: dom.annualCrashRate, valEl: dom.annualCrashRateValue, format: (val) => `${val}%` },
                     { el: dom.avgRepairInvoice, valEl: dom.avgRepairInvoiceValue, format: (val) => `£${parseInt(val).toLocaleString('en-GB')}` },
                     { el: dom.avgNewVehicleRevenue, valEl: dom.avgNewVehicleRevenueValue, format: (val) => `£${parseInt(val).toLocaleString('en-GB')}` },
+                    { el: dom.aCallOnTcsAccept, valEl: dom.aCallOnTcsAcceptValue, format: (val) => `${val}%`},
+                    { el: dom.aCallOffTcsAccept, valEl: dom.aCallOffTcsAcceptValue, format: (val) => `${val}%`},
                 ];
 
                 sliders.forEach(({ el, valEl, format }) => {
-                    valEl.textContent = format(el.value); // Set initial value
-                    el.addEventListener('input', () => {
-                        valEl.textContent = format(el.value);
-                        updateStateFromUI();
+                    if (el) {
+                        valEl.textContent = format(el.value); // Set initial value
+                        el.addEventListener('input', () => {
+                            valEl.textContent = format(el.value);
+                            updateStateFromUI();
+                            calculateAndRender();
+                        });
+                    }
+                });
+                
+                if (dom.resetButton) {
+                    dom.resetButton.addEventListener('click', () => {
+                        Object.keys(defaultState).forEach(key => {
+                            state[key] = defaultState[key];
+                        });
+                        
+                        // Update UI from reset state
+                        sliders.forEach(({ el, valEl, format }) => {
+                            let key;
+                             if(el.id === 'aCallOnTcsAccept') {
+                                key = 'aCall_on_tcsAcceptanceRate';
+                            } else if (el.id === 'aCallOffTcsAccept') {
+                                key = 'aCall_off_tcsAcceptanceRate';
+                            } else {
+                                key = el.id;
+                            }
+
+                            if(defaultState[key] !== undefined) {
+                                el.value = defaultState[key];
+                                valEl.textContent = format(el.value);
+                            }
+                        });
+
                         calculateAndRender();
                     });
-                });
+                }
+
 
                 function handleToggle(container, stateKey) {
-                    container.addEventListener('click', (e) => {
-                        if (e.target.tagName === 'BUTTON') {
-                            const value = e.target.dataset.value === 'true';
-                            state[stateKey] = value;
-                            container.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-                            e.target.classList.add('active');
-                            calculateAndRender();
-                        }
-                    });
+                    if (container) {
+                        container.addEventListener('click', (e) => {
+                            if (e.target.tagName === 'BUTTON') {
+                                const value = e.target.dataset.value === 'true';
+                                state[stateKey] = value;
+                                container.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                                e.target.classList.add('active');
+                                calculateAndRender();
+                            }
+                        });
+                    }
                 }
                 handleToggle(dom.eCallToggleContainer, 'eCallOn');
                 handleToggle(dom.aCallToggleContainer, 'aCallOn');
-                
-                dom.tabCalculator.addEventListener('click', () => {
-                    dom.viewCalculator.classList.remove('hidden');
-                    dom.viewSettings.classList.add('hidden');
-                    dom.tabCalculator.classList.add('bg-blue-100', 'text-blue-700');
-                    dom.tabCalculator.classList.remove('text-gray-600');
-                    dom.tabSettings.classList.add('text-gray-600');
-                    dom.tabSettings.classList.remove('bg-blue-100', 'text-blue-700');
-                });
-
-                dom.tabSettings.addEventListener('click', () => {
-                    dom.viewCalculator.classList.add('hidden');
-                    dom.viewSettings.classList.remove('hidden');
-                    dom.tabSettings.classList.add('bg-blue-100', 'text-blue-700');
-                    dom.tabSettings.classList.remove('text-gray-600');
-                    dom.tabCalculator.classList.add('text-gray-600');
-                    dom.tabCalculator.classList.remove('bg-blue-100', 'text-blue-700');
-                });
                 
                 dom.collapsibleTriggers.forEach(trigger => {
                     const contentId = trigger.dataset.collapsibleTrigger;
                     const content = document.getElementById(contentId);
                     const icon = trigger.querySelector('[data-collapsible-icon]');
 
-                    trigger.addEventListener('click', () => {
-                        const isHidden = content.classList.toggle('hidden');
-                        icon.classList.toggle('rotate-180', !isHidden);
-                    });
+                    if (content && icon) {
+                        trigger.addEventListener('click', () => {
+                            const isHidden = content.classList.toggle('hidden');
+                            icon.classList.toggle('rotate-180', !isHidden);
+                        });
+                    }
                 });
             }
 
             function init() {
-                initializeSettings();
                 setupEventListeners();
                 updateStateFromUI();
                 calculateAndRender();
@@ -770,4 +709,6 @@
     </script>
 </body>
 </html>
+
+
 
