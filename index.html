@@ -69,22 +69,6 @@
         .funnel-box.uplift { border-top: 4px solid #22C55E; }
         .funnel-box.info, .funnel-box.start, .funnel-box.end { border-top: 4px solid #6B7280; }
         
-        /* Settings Input */
-        .settings-input {
-            width: 100%;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #D1D5DB;
-            background-color: #F9FAFB;
-            color: #111827;
-        }
-        .settings-input:focus {
-            outline: 2px solid transparent;
-            outline-offset: 2px;
-            border-color: #3B82F6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
-        }
-
         .reset-button {
              background: none;
              border: none;
@@ -129,40 +113,38 @@
                     </div>
 
                     <div id="view-calculator" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
-                             <div>
-                                <label for="totalConnectedCarParc" class="block text-sm font-bold text-gray-700">Total Connected Car Parc</label>
-                                <input type="range" id="totalConnectedCarParc" min="500000" max="4000000" value="2100000" step="100000" class="mt-2 block w-full slider">
-                                <span id="totalConnectedCarParcValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">2,100,000</span>
-                            </div>
-                            <div>
-                                <label for="annualCrashRate" class="block text-sm font-bold text-gray-700">Annual Crash Rate (%)</label>
-                                <input type="range" id="annualCrashRate" min="1" max="20" value="7" class="mt-2 block w-full slider">
-                                <span id="annualCrashRateValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">7%</span>
-                            </div>
-                            <div>
-                                <label for="avgRepairInvoice" class="block text-sm font-bold text-gray-700">Avg. Repair Invoice</label>
-                                <input type="range" id="avgRepairInvoice" min="1000" max="10000" value="2500" step="100" class="mt-2 block w-full slider">
-                                <span id="avgRepairInvoiceValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£2,500</span>
-                            </div>
-                            <div>
-                                <label for="avgNewVehicleRevenue" class="block text-sm font-bold text-gray-700">Avg. New Vehicle Sale Revenue</label>
-                                <input type="range" id="avgNewVehicleRevenue" min="5000" max="200000" value="30000" step="100" class="mt-2 block w-full slider">
-                                <span id="avgNewVehicleRevenueValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£30,000</span>
-                            </div>
-                            <div>
-                                <label for="aCallOnTcsAccept" class="block text-sm font-bold text-gray-700">aCall ON Pre-consent (%)</label>
-                                <input type="range" id="aCallOnTcsAccept" min="0" max="100" value="92" step="1" class="mt-2 block w-full slider">
-                                <span id="aCallOnTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">92%</span>
-                            </div>
-                             <div>
-                                <label for="aCallOffTcsAccept" class="block text-sm font-bold text-gray-700">aCall OFF T&Cs Accept (%)</label>
-                                <input type="range" id="aCallOffTcsAccept" min="0" max="100" value="20" step="1" class="mt-2 block w-full slider">
-                                <span id="aCallOffTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">20%</span>
-                            </div>
+                        <div>
+                            <label for="totalConnectedCarParc" class="block text-sm font-bold text-gray-700">Total Connected Car Parc</label>
+                            <input type="range" id="totalConnectedCarParc" min="500000" max="4000000" value="2100000" step="100000" class="mt-2 block w-full slider">
+                            <span id="totalConnectedCarParcValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">2,100,000</span>
+                        </div>
+                        <div>
+                            <label for="annualCrashRate" class="block text-sm font-bold text-gray-700">Annual Crash Rate (%)</label>
+                            <input type="range" id="annualCrashRate" min="1" max="20" value="7" class="mt-2 block w-full slider">
+                            <span id="annualCrashRateValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">7%</span>
+                        </div>
+                        <div>
+                            <label for="avgRepairInvoice" class="block text-sm font-bold text-gray-700">Avg. Repair Invoice</label>
+                            <input type="range" id="avgRepairInvoice" min="1000" max="10000" value="2500" step="100" class="mt-2 block w-full slider">
+                            <span id="avgRepairInvoiceValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£2,500</span>
+                        </div>
+                        <div>
+                            <label for="avgNewVehicleRevenue" class="block text-sm font-bold text-gray-700">Avg. New Vehicle Sale Revenue</label>
+                            <input type="range" id="avgNewVehicleRevenue" min="5000" max="200000" value="30000" step="100" class="mt-2 block w-full slider">
+                            <span id="avgNewVehicleRevenueValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">£30,000</span>
+                        </div>
+                        <div>
+                            <label for="aCallOnTcsAccept" class="block text-sm font-bold text-gray-700">aCall ON Pre-consent (%)</label>
+                            <input type="range" id="aCallOnTcsAccept" min="0" max="100" value="92" step="1" class="mt-2 block w-full slider">
+                            <span id="aCallOnTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">92%</span>
+                        </div>
+                         <div>
+                            <label for="aCallOffTcsAccept" class="block text-sm font-bold text-gray-700">aCall OFF T&Cs Accept (%)</label>
+                            <input type="range" id="aCallOffTcsAccept" min="0" max="100" value="20" step="1" class="mt-2 block w-full slider">
+                            <span id="aCallOffTcsAcceptValue" class="font-semibold text-gray-800 text-sm mt-2 block text-center">20%</span>
                         </div>
 
-                         <div class="pt-6 border-t border-gray-200 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-6">
+                         <div class="pt-6 border-t border-gray-200 space-y-6">
                              <div>
                                 <label class="block text-sm font-bold text-gray-700 mb-2">Mission Control eCall (ACN)</label>
                                 <div class="segmented-control" id="eCallToggleContainer">
@@ -188,38 +170,42 @@
                     <h2 class="text-xl font-bold section-title mb-4">Combined Programme Overview</h2>
                     <div id="combinedResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </section>
-
-                <section id="eCallSection" class="panel">
-                    <button class="w-full p-6 text-left" data-collapsible-trigger="eCallContent">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-bold section-title">eCall Programme</h2>
-                            <div class="flex items-center space-x-4">
-                               <span id="eCallStatus" class="font-semibold px-3 py-1 text-xs rounded-full"></span>
-                               <svg data-collapsible-icon class="w-5 h-5 text-gray-500 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </div>
-                        </div>
-                    </button>
-                    <div id="eCallContent" class="px-6 pb-6 space-y-6">
-                        <div id="eCallBreakdown"></div>
-                        <div id="eCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
+                
+                <div>
+                     <div class="border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-8" id="programmeTabs">
+                            <button data-tab-target="eCallSection" class="active-tab whitespace-nowrap py-4 px-1 border-b-2 font-semibold text-sm text-blue-600 border-blue-600">
+                                eCall Programme
+                            </button>
+                            <button data-tab-target="aCallSection" class="whitespace-nowrap py-4 px-1 border-b-2 font-semibold text-sm text-gray-500 border-transparent hover:text-gray-700 hover:border-gray-300">
+                                aCall Programme
+                            </button>
+                        </nav>
                     </div>
-                </section>
+                    <div class="mt-8">
+                        <section id="eCallSection" class="panel tab-panel">
+                            <div class="flex justify-between items-center p-6">
+                                <h2 class="text-xl font-bold section-title">eCall Programme Details</h2>
+                                <span id="eCallStatus" class="font-semibold px-3 py-1 text-xs rounded-full"></span>
+                            </div>
+                            <div class="px-6 pb-6 space-y-6">
+                                <div id="eCallBreakdown"></div>
+                                <div id="eCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
+                            </div>
+                        </section>
 
-                <section id="aCallSection" class="panel">
-                     <button class="w-full p-6 text-left" data-collapsible-trigger="aCallContent">
-                        <div class="flex justify-between items-center">
-                            <h2 class="text-xl font-bold section-title">aCall Programme</h2>
-                            <div class="flex items-center space-x-4">
+                        <section id="aCallSection" class="panel tab-panel hidden">
+                             <div class="flex justify-between items-center p-6">
+                                <h2 class="text-xl font-bold section-title">aCall Programme Details</h2>
                                 <span id="aCallStatus" class="font-semibold px-3 py-1 text-xs rounded-full"></span>
-                                <svg data-collapsible-icon class="w-5 h-5 text-gray-500 transition-transform transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </div>
-                        </div>
-                    </button>
-                    <div id="aCallContent" class="px-6 pb-6 space-y-6">
-                         <div id="aCallBreakdown"></div>
-                        <div id="aCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
+                            <div class="px-6 pb-6 space-y-6">
+                                 <div id="aCallBreakdown"></div>
+                                <div id="aCallResults" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-gray-200"></div>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
 
@@ -241,7 +227,6 @@
                 ...defaultState,
                 eCallOn: false,
                 aCallOn: false,
-                activeTab: 'calculator',
                 eCall_off_tcsAcceptanceRate: 98,
                 eCall_off_acnDetectionRate: 9,
                 eCall_off_emergencyAcnSplit: 40,
@@ -307,7 +292,8 @@
                 aCallBreakdown: document.getElementById('aCallBreakdown'),
                 aCallStatus: document.getElementById('aCallStatus'),
                 combinedResults: document.getElementById('combinedResults'),
-                collapsibleTriggers: document.querySelectorAll('[data-collapsible-trigger]'),
+                programmeTabs: document.getElementById('programmeTabs'),
+                tabPanels: document.querySelectorAll('.tab-panel')
             };
             
 
@@ -657,8 +643,9 @@
                                 key = el.id;
                             }
 
-                            if(defaultState[key] !== undefined) {
-                                el.value = defaultState[key];
+                            const sliderKey = Object.keys(defaultState).find(k => k.toLowerCase().includes(el.id.toLowerCase()));
+                             if(defaultState[sliderKey] !== undefined) {
+                                el.value = defaultState[sliderKey];
                                 valEl.textContent = format(el.value);
                             }
                         });
@@ -684,18 +671,30 @@
                 handleToggle(dom.eCallToggleContainer, 'eCallOn');
                 handleToggle(dom.aCallToggleContainer, 'aCallOn');
                 
-                dom.collapsibleTriggers.forEach(trigger => {
-                    const contentId = trigger.dataset.collapsibleTrigger;
-                    const content = document.getElementById(contentId);
-                    const icon = trigger.querySelector('[data-collapsible-icon]');
+                if(dom.programmeTabs) {
+                    dom.programmeTabs.addEventListener('click', (e) => {
+                         const clickedTab = e.target.closest('button');
+                         if (!clickedTab) return;
 
-                    if (content && icon) {
-                        trigger.addEventListener('click', () => {
-                            const isHidden = content.classList.toggle('hidden');
-                            icon.classList.toggle('rotate-180', !isHidden);
+                        // Update tab styles
+                        dom.programmeTabs.querySelectorAll('button').forEach(btn => {
+                            btn.classList.remove('text-blue-600', 'border-blue-600');
+                            btn.classList.add('text-gray-500', 'border-transparent', 'hover:text-gray-700', 'hover:border-gray-300');
                         });
-                    }
-                });
+                        clickedTab.classList.add('text-blue-600', 'border-blue-600');
+                        clickedTab.classList.remove('text-gray-500', 'border-transparent', 'hover:text-gray-700', 'hover:border-gray-300');
+
+                        // Update panel visibility
+                        const targetId = clickedTab.dataset.tabTarget;
+                        dom.tabPanels.forEach(panel => {
+                            if (panel.id === targetId) {
+                                panel.classList.remove('hidden');
+                            } else {
+                                panel.classList.add('hidden');
+                            }
+                        });
+                    });
+                }
             }
 
             function init() {
@@ -709,6 +708,4 @@
     </script>
 </body>
 </html>
-
-
 
